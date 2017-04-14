@@ -4,16 +4,19 @@ const { app, BrowserWindow } = require('electron')
 
 let win
 
-function createWindow () {
+var createWindow = () => {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1290,
+    height: 750,
     minWidth: 320,
-    minHeight: 480
+    minHeight: 480,
+    icon: path.join(__dirname, 'images/icon.ico'),
+    backgroundColor: '#282c37',
+    darkTheme: true
   })
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'view/index.html'),
+    pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))

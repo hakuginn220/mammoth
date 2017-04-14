@@ -4,11 +4,11 @@
   "description": "test client for mastodon",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
-    "test": "electron-packager .",
+    "start": "webpack && electron . & webpack -w",
+    "test": "standard --fix",
     "release": "npm run release:darwin && npm run release:win32",
-    "release:darwin": "electron-packager . --platform=darwin --arch=x64 --icon=images/icon.icns",
-    "release:win32": "electron-packager . --platform=win32 --arch=ia32 --icon=images/icon.ico"
+    "release:darwin": "electron-packager . --platform=darwin --arch=x64 --icon=images/icon.icns --asar=true",
+    "release:win32": "electron-packager . --platform=win32 --arch=ia32 --icon=images/icon.ico --asar=true"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,20 @@
     "url": "https://github.com/hakuginn220/mammoth/issues"
   },
   "homepage": "https://github.com/hakuginn220/mammoth#readme",
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.0",
     "electron": "^1.6.2",
-    "electron-packager": "^8.6.0"
+    "electron-packager": "^8.6.0",
+    "standard": "^10.0.1",
+    "style-loader": "^0.16.1",
+    "webpack": "^2.4.1"
   }
 }

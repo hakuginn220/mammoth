@@ -2,5 +2,8 @@
 npm-debug.log*
 node_modules
 
-# electron release package
+# webpack
+bundle.js
+
+# electron-packager
 mammoth-*

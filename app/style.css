@@ -1,0 +1,12 @@
+::selection {
+  background: white;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.body {
+  position: relative;
+}
