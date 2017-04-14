@@ -4,7 +4,9 @@
   "description": "test client for mastodon",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "electron-packager .",
+    "release": "electron-packager . --platform=darwin,win32"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,7 @@
   },
   "homepage": "https://github.com/hakuginn220/mammoth#readme",
   "devDependencies": {
-    "electron": "^1.6.2"
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0"
   }
 }
