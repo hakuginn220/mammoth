@@ -1,2 +1,2 @@
-# motty
+# mammoth
 test client for mastodon
