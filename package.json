@@ -1,0 +1,22 @@
+{
+  "name": "mammoth",
+  "version": "0.0.1",
+  "description": "test client for mastodon",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hakuginn220/mammoth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hakuginn220/mammoth/issues"
+  },
+  "homepage": "https://github.com/hakuginn220/mammoth#readme",
+  "devDependencies": {
+    "electron": "^1.6.2"
+  }
+}
