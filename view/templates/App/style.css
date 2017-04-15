@@ -2,11 +2,11 @@
   background: white;
 }
 
+:root {
+  --primary-color: #282c37;
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
-}
-
-.body {
-  position: relative;
 }

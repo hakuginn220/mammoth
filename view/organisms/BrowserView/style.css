@@ -1,0 +1,15 @@
+.loadingShow {
+  display: block;
+}
+
+.loadingHide {
+  display: none;
+}
+
+.webviewShow {
+  opacity: 1;
+}
+
+.webviewHide {
+  opacity: 0;
+}

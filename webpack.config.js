@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  entry: './app/index.js',
+  entry: './view/index.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname)
@@ -31,5 +31,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  target: 'electron-renderer'
 }

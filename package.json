@@ -1,10 +1,10 @@
 {
   "name": "mammoth",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "test client for mastodon",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "webpack && electron . & webpack -w",
+    "start": "webpack -w & electron .",
     "test": "standard --fix",
     "release": "npm run release:darwin && npm run release:win32",
     "release:darwin": "electron-packager . --platform=darwin --arch=x64 --icon=images/icon.icns --asar=true",
@@ -14,8 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/hakuginn220/mammoth.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "hakuginn220",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hakuginn220/mammoth/issues"
   },

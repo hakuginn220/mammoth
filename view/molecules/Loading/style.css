@@ -1,22 +1,15 @@
 .body {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 52px;
   left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 90%;
-  height: 100px;
+  display: table;
+  width: 100%;
+  height: calc(100% - 52px);
 }
 
-.bodyShow {
-  composes: body;
-  display: block;
-}
-
-.bodyHide {
-  composes: body;
-  display: none;
+.inner {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .title {
