@@ -10,6 +10,10 @@
   list-style-type: none;
 }
 
+.list::-webkit-scrollbar {
+  display: none;
+}
+
 .item {
   display: block;
   margin: 0 10px 0 0;

@@ -1,6 +1,6 @@
 const path = require('path')
 const url = require('url')
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow } = require('electron')
 
 let win
 
@@ -27,6 +27,7 @@ var createWindow = () => {
 }
 
 app.on('ready', () => {
+  require('./action/ipc')
   createWindow()
 })
 
@@ -40,14 +41,4 @@ app.on('activate', () => {
   if (win === null) {
     createWindow()
   }
-})
-
-ipcMain.on('AppChange', (event, param) => {
-  event.sender.send('AppChange', param)
-  // console.log('[AppChange]:', param)
-})
-
-ipcMain.on('WebviewLoading', (event, param) => {
-  event.sender.send('WebviewLoading', param)
-  // console.log('[WebviewLoading]:', param)
 })
