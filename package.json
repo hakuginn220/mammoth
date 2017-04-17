@@ -6,9 +6,9 @@
   "scripts": {
     "start": "webpack -w & electron .",
     "test": "webpack && standard --fix",
-    "release": "npm run release:darwin && npm run release:win32",
-    "release:darwin": "electron-packager . --platform=darwin --arch=x64 --icon=images/icon.icns --asar=true",
-    "release:win32": "electron-packager . --platform=win32 --arch=ia32 --icon=images/icon.ico --asar=true"
+    "release": "webpack && npm run release:darwin && npm run release:win32",
+    "release:darwin": "electron-packager . --platform=darwin --arch=x64 --out=release --asar=true --icon=images/icon.icns",
+    "release:win32": "electron-packager . --platform=win32 --arch=ia32 --out=release --asar=true --icon=images/icon.ico"
   },
   "repository": {
     "type": "git",

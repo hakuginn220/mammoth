@@ -10,4 +10,4 @@ node_modules
 bundle.js
 
 # electron-packager
-mammoth-*
+release
