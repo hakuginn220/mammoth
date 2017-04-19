@@ -27,6 +27,7 @@ var createWindow = () => {
 }
 
 app.on('ready', () => {
+  require('./action/ipc')
   createWindow()
 })
 

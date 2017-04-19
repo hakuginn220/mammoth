@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  entry: './view/index.js',
+  entry: path.join(__dirname, 'view/index.js'),
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname)
