@@ -1,0 +1,14 @@
+.button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0.6em 1.2em;
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: 0;
+  font-size: 16px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
