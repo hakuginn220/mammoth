@@ -6,13 +6,13 @@ export default () => {
   return (
     <div className={style.form}>
       <div className={style.field}>
-        <label htmlFor="oauth_domain">インスタンス先のドメインを入力してください</label>
+        <label htmlFor='oauth_domain'>インスタンス先のドメインを入力してください</label>
       </div>
       <div className={style.field}>
-        <input type="text" id="oauth_domain" />
+        <input type='text' id='oauth_domain' />
       </div>
       <div className={style.field}>
-        <Button value="認証する" />
+        <Button value='認証する' />
       </div>
     </div>
   )

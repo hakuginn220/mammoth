@@ -6,8 +6,8 @@ let win
 
 var createWindow = () => {
   win = new BrowserWindow({
-    width: 1290,
-    height: 750,
+    width: 800,
+    height: 600,
     minWidth: 320,
     minHeight: 480,
     icon: path.join(__dirname, 'images/icon.ico'),
@@ -27,7 +27,6 @@ var createWindow = () => {
 }
 
 app.on('ready', () => {
-  require('./action/ipc')
   createWindow()
 })
 
