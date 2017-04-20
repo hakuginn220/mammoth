@@ -9,14 +9,14 @@ ipcMain.on('OATH_SUBMIT', (event, store) => {
     path: '/api/v1/instance'
   })
 
+  request.on('error', (error) => {
+    console.log(error)
+    event.sender.send('OATH_SUBMIT_FAIL')
+  })
+
   request.on('response', (response) => {
-    console.log(`STATUS: ${response.statusCode}`)
-    console.log(`HEADERS: ${JSON.stringify(response.headers)}`)
-    response.on('data', (chunk) => {
-      console.log(`BODY: ${chunk}`)
-    })
-    response.on('end', () => {
-      console.log('No more data in response.')
+    response.on('data', (data) => {
+      event.sender.send('OATH_SUBMIT_SUCCESS', JSON.parse(data))
     })
   })
 
