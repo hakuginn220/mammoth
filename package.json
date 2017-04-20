@@ -20,6 +20,10 @@
     "url": "https://github.com/hakuginn220/mammoth/issues"
   },
   "homepage": "https://github.com/hakuginn220/mammoth#readme",
+  "engines": {
+    "node": ">=7.0.0",
+    "npm": ">=4.0.0"
+  },
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
