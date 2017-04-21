@@ -21,10 +21,12 @@
   },
   "homepage": "https://github.com/hakuginn220/mammoth#readme",
   "engines": {
-    "node": ">=7.0.0",
+    "node": ">=6.0.0",
     "npm": ">=4.0.0"
   },
   "dependencies": {
+    "flux": "^3.1.2",
+    "immutable": "^3.8.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
