@@ -1,6 +1,6 @@
-const path = require('path')
-const url = require('url')
-const { app, BrowserWindow } = require('electron')
+import path from 'path'
+import url from 'url'
+import { app, BrowserWindow } from 'electron'
 
 let win
 
