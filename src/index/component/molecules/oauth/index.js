@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import style from './style.css'
 import Button from '../../atoms/button'
 import Input from '../../atoms/input'
-import Action from '../../../action'
+import * as Action from '../../../action/oauth'
 
 export default class Oauth extends Component {
   _updateValue (event) {
@@ -12,7 +12,7 @@ export default class Oauth extends Component {
 
   _submitValue (event) {
     event.preventDefault()
-    Action.oauthUpdateResult(this.props.oauth_value)
+    Action.oauthUpdateResult(this.props.oauth.get('value'))
   }
 
   _render0 () {
@@ -24,13 +24,13 @@ export default class Oauth extends Component {
             <Input
               label='ドメインを入力'
               id='instance_domain_name'
-              value={this.props.oauth_value}
+              value={this.props.oauth.get('value')}
               placeholder='mastodon.cloud'
               onChange={this._updateValue.bind(this)}
             />
           </div>
           <div className={style.field}>
-            {this.props.oauth_error}
+            {this.props.oauth.get('error')}
           </div>
           <div className={style.field}>
             <Button
@@ -46,16 +46,18 @@ export default class Oauth extends Component {
   _render1 () {
     return (
       <div>
-        <div>インスタンス確認中: {this.props.oauth_value}</div>
-        <div>サイト名: {this.props.oauth_result.title}</div>
-        <div>ドメイン名: {this.props.oauth_result.url}</div>
-        <div>メールアドレス: {this.props.oauth_result.email}</div>
+        <div>インスタンス確認中</div>
+        <div>{this.props.oauth.get('value')}</div>
+        <div>リザルト情報</div>
+        <div>{this.props.oauth.getIn(['result', 'title'])}</div>
+        <div>{this.props.oauth.getIn(['result', 'url'])}</div>
+        <div>{this.props.oauth.getIn(['result', 'email'])}</div>
       </div>
     )
   }
 
   render () {
-    switch (this.props.oauth_action) {
+    switch (this.props.oauth.get('action')) {
       case 1:
         return this._render1()
       default:

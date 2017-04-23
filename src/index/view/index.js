@@ -1,21 +1,20 @@
 import React, { Component } from 'react'
-import Dispatcher from '../dispatcher'
-import Store from '../store'
+import OauthStore from '../store/oauth'
 import App from '../component'
-
-const store = new Store(Dispatcher)
 
 export default class View extends Component {
   static getStores () {
-    return [store]
+    return [OauthStore]
   }
 
   static calculateState (prevState) {
-    return store.getState()
+    return {
+      oauth: OauthStore.getState()
+    }
   }
 
   render () {
-    console.log(this.state)
+    console.log(this.state.oauth.toJSON())
     return <App {...this.state} />
   }
 }
