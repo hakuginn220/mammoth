@@ -1,8 +1,8 @@
 {
+  "private": true,
   "name": "mammoth",
   "version": "0.1.0",
   "description": "test client for mastodon",
-  "main": "app/main.min.js",
   "scripts": {
     "start": "webpack && electron app & webpack -w",
     "test": "webpack && standard --fix",
@@ -10,18 +10,8 @@
     "release:darwin": "electron-packager app --platform=darwin --arch=x64 --out=dist --asar=true --icon=app/images/icon.icns",
     "release:win32": "electron-packager app --platform=win32 --arch=ia32 --out=dist --asar=true --icon=app/images/icon.ico"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hakuginn220/mammoth.git"
-  },
-  "author": "hakuginn220",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hakuginn220/mammoth/issues"
-  },
-  "homepage": "https://github.com/hakuginn220/mammoth#readme",
   "engines": {
-    "node": ">=6.0.0",
+    "node": ">=7.0.0",
     "npm": ">=4.0.0"
   },
   "dependencies": {
