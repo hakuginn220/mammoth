@@ -35,14 +35,14 @@ const COMMON = {
 
 const FRONTEND = {
   entry: {
-    index: path.join(__dirname, 'view/index.js')
+    index: path.join(__dirname, 'src/index/index.js')
   },
   target: 'electron-renderer'
 }
 
 const BACKEND = {
   entry: {
-    main: path.join(__dirname, 'main/index.js')
+    main: path.join(__dirname, 'src/main/index.js')
   },
   target: 'electron',
   node: {

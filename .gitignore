@@ -10,4 +10,4 @@ node_modules
 *.min.js
 
 # electron-packager
-release
+dist
