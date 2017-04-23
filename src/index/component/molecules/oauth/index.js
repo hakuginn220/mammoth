@@ -1,31 +1,18 @@
 import React, { Component } from 'react'
-import { ipcRenderer } from 'electron'
 import style from './style.css'
 import Button from '../../atoms/button'
 import Input from '../../atoms/input'
+import Action from '../../../action'
 
 export default class Oauth extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { value: '', result: {}, error: '', action: 0 }
-
-    ipcRenderer.on('OATH_SUBMIT_FAIL', (event) => {
-      this.setState({ error: '接続に失敗しました', action: 0 })
-    })
-
-    ipcRenderer.on('OATH_SUBMIT_SUCCESS', (event, result) => {
-      this.setState({ result: result })
-    })
-  }
-
   _updateValue (event) {
-    this.setState({ value: event.target.value, error: '' })
+    event.preventDefault()
+    Action.oauthUpdateValue(event.target.value)
   }
 
   _submitValue (event) {
-    ipcRenderer.send('OATH_SUBMIT', this.state)
-    this.setState({ action: this.state.action + 1 })
     event.preventDefault()
+    Action.oauthUpdateResult(this.props.oauth_value)
   }
 
   _render0 () {
@@ -37,13 +24,13 @@ export default class Oauth extends Component {
             <Input
               label='ドメインを入力'
               id='instance_domain_name'
-              value={this.state.value}
+              value={this.props.oauth_value}
               placeholder='mastodon.cloud'
               onChange={this._updateValue.bind(this)}
             />
           </div>
           <div className={style.field}>
-            {this.state.error}
+            {this.props.oauth_error}
           </div>
           <div className={style.field}>
             <Button
@@ -59,26 +46,16 @@ export default class Oauth extends Component {
   _render1 () {
     return (
       <div>
-        <div>インスタンス確認中: {this.state.value}</div>
-        <div>サイト名: {this.state.result.title}</div>
-        <div>ドメイン名: {this.state.result.url}</div>
-        <div>メールアドレス: {this.state.result.email}</div>
-      </div>
-    )
-  }
-
-  _render2 () {
-    return (
-      <div>
-        <div>インスタンス認証中...</div>
+        <div>インスタンス確認中: {this.props.oauth_value}</div>
+        <div>サイト名: {this.props.oauth_result.title}</div>
+        <div>ドメイン名: {this.props.oauth_result.url}</div>
+        <div>メールアドレス: {this.props.oauth_result.email}</div>
       </div>
     )
   }
 
   render () {
-    switch (this.state.action) {
-      case 2:
-        return this._render2()
+    switch (this.props.oauth_action) {
       case 1:
         return this._render1()
       default:

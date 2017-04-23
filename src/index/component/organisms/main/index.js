@@ -7,7 +7,7 @@ export default class Main extends Component {
     return (
       <div className={style.wrapper}>
         <div className={style.inner}>
-          <Oauth />
+          <Oauth {...this.props} />
         </div>
       </div>
     )

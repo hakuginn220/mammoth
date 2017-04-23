@@ -4,7 +4,7 @@
   "description": "test client for mastodon",
   "main": "app/main.min.js",
   "scripts": {
-    "start": "webpack && electron app",
+    "start": "webpack && electron app & webpack -w",
     "test": "webpack && standard --fix",
     "release": "webpack && npm run release:darwin && npm run release:win32",
     "release:darwin": "electron-packager app --platform=darwin --arch=x64 --out=dist --asar=true --icon=app/images/icon.icns",
@@ -33,6 +33,7 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.0",
     "electron": "^1.6.5",

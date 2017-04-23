@@ -1,10 +1,10 @@
 const { ipcMain, net } = require('electron')
 
-ipcMain.on('OATH_SUBMIT', (event, store) => {
+ipcMain.on('OATH_SUBMIT', (event, value) => {
   const request = net.request({
     method: 'GET',
     protocol: 'https:',
-    hostname: store.value,
+    hostname: value,
     port: 443,
     path: '/api/v1/instance'
   })

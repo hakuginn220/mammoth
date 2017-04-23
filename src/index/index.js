@@ -1,8 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
-import App from './templates/app'
+import { Container } from 'flux/utils'
+import View from './view'
+
+const ViewContainer = Container.create(View)
 
 render(
-  <App />,
+  <ViewContainer />,
   document.getElementById('root')
 )
