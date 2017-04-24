@@ -16,7 +16,7 @@ class OauthStore extends ReduceStore {
       value: '',
       error: '',
       action: 0,
-      result: Result({})
+      result: Result()
     })
   }
 
