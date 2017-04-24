@@ -5,7 +5,7 @@
   "description": "test client for mastodon",
   "scripts": {
     "start": "webpack && electron app & webpack -w",
-    "test": "webpack && flow && standard --fix",
+    "test": "webpack && standard --fix && flow",
     "release": "webpack && npm run release:darwin && npm run release:win32",
     "release:darwin": "electron-packager app --platform=darwin --arch=x64 --out=dist --asar=true --icon=app/images/icon.icns",
     "release:win32": "electron-packager app --platform=win32 --arch=ia32 --out=dist --asar=true --icon=app/images/icon.ico"
