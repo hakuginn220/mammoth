@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Container } from 'flux/utils'
-import View from './view'
+import Dispatcher from './dispatcher'
+import App from './component'
+import OauthStore from './store/oauth'
 
-const ViewContainer = Container.create(View)
+const oauth = new OauthStore(Dispatcher)
+
+class Root extends Component {
+  static getStores () {
+    return [oauth]
+  }
+
+  static calculateState (prevState) {
+    return {
+      oauth: oauth.getState()
+    }
+  }
+
+  render () {
+    console.log(this.state.oauth.toJSON())
+    return <App {...this.state} />
+  }
+}
+
+const RootContainer = Container.create(Root)
 
 render(
-  <ViewContainer />,
+  <RootContainer />,
   document.getElementById('root')
 )

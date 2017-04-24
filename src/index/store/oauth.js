@@ -1,6 +1,5 @@
 import { Map, Record } from 'immutable'
 import { ReduceStore } from 'flux/utils'
-import Dispatcher from '../dispatcher'
 import * as Action from '../action/oauth'
 
 const Result = Record({
@@ -10,7 +9,7 @@ const Result = Record({
   description: ''
 })
 
-class OauthStore extends ReduceStore {
+export default class OauthStore extends ReduceStore {
   getInitialState () {
     return Map({
       value: '',
@@ -35,5 +34,3 @@ class OauthStore extends ReduceStore {
     }
   }
 }
-
-export default new OauthStore(Dispatcher)
