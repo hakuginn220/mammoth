@@ -1,6 +1,6 @@
 const path = require('path')
 
-const COMMON = {
+const option = {
   output: {
     filename: '[name].min.js',
     path: path.resolve(__dirname, 'app')
@@ -26,31 +26,30 @@ const COMMON = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['react', 'es2015']
+          presets: ['flow', 'react', 'es2015']
         }
       }
     ]
   }
 }
 
-const FRONTEND = {
-  entry: {
-    index: path.join(__dirname, 'src/index/index.js')
-  },
-  target: 'electron-renderer'
-}
-
-const BACKEND = {
-  entry: {
-    main: path.join(__dirname, 'src/main/index.js')
-  },
-  target: 'electron',
-  node: {
-    __dirname: false
-  }
-}
-
 module.exports = [
-  Object.assign({}, COMMON, FRONTEND),
-  Object.assign({}, COMMON, BACKEND)
+
+  Object.assign({}, option, {
+    entry: {
+      index: path.join(__dirname, 'src/index/index.js')
+    },
+    target: 'electron-renderer'
+  }),
+
+  Object.assign({}, option, {
+    entry: {
+      main: path.join(__dirname, 'src/main/index.js')
+    },
+    target: 'electron',
+    node: {
+      __dirname: false
+    }
+  })
+
 ]
