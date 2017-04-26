@@ -1,3 +1,4 @@
+// @flow
 import { ipcMain, net } from 'electron'
 
 export default () => {

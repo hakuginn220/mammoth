@@ -5,7 +5,7 @@
   "description": "test client for mastodon",
   "scripts": {
     "start": "electron app",
-    "test": "standard --fix && flow check",
+    "test": "standard --fix && flow-typed install && flow check",
     "build": "webpack",
     "watch": "webpack -w",
     "release": "npm run build && npm run release:darwin && npm run release:win32",
@@ -32,7 +32,13 @@
     "electron": "^1.6.6",
     "electron-packager": "^8.6.0",
     "flow-bin": "^0.44.2",
+    "flow-typed": "^2.1.2",
     "standard": "^10.0.2",
     "webpack": "^2.4.1"
+  },
+  "standard": {
+    "ignore": [
+      "flow-typed"
+    ]
   }
 }
