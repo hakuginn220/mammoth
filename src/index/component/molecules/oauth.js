@@ -1,8 +1,36 @@
 import React, { Component } from 'react'
-import style from './style.css'
-import Button from '../../atoms/button'
-import Input from '../../atoms/input'
-import * as Action from '../../../action/oauth'
+import styled from 'styled-components'
+import Button from '../atoms/button'
+import Input from '../atoms/input'
+import * as Action from '../../action/oauth'
+
+const Form = styled.form`
+  display: block;
+  margin: 0;
+`
+
+const Fieldset = styled.fieldset`
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+`
+
+const Legend = styled.legend`
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0 0 0.5em;
+  border-bottom: 1px solid white;
+  font-size: 20px;
+  text-align: center;
+`
+
+const Field = styled.div`
+  display: block;
+  margin: 40px 0 0;
+`
 
 export default class Oauth extends Component {
   _updateValue (event) {
@@ -17,10 +45,10 @@ export default class Oauth extends Component {
 
   _render0 () {
     return (
-      <form className={style.form} onSubmit={this._submitValue.bind(this)}>
-        <fieldset className={style.fieldset}>
-          <legend className={style.legend}>インスタンスの追加</legend>
-          <div className={style.field}>
+      <Form onSubmit={this._submitValue.bind(this)}>
+        <Fieldset>
+          <Legend>インスタンスの追加</Legend>
+          <Field>
             <Input
               label='ドメインを入力'
               id='instance_domain_name'
@@ -28,18 +56,18 @@ export default class Oauth extends Component {
               placeholder='mastodon.cloud'
               onChange={this._updateValue.bind(this)}
             />
-          </div>
-          <div className={style.field}>
+          </Field>
+          <Field>
             {this.props.oauth.get('error')}
-          </div>
-          <div className={style.field}>
+          </Field>
+          <Field>
             <Button
               type='submit'
               value='次へ'
             />
-          </div>
-        </fieldset>
-      </form>
+          </Field>
+        </Fieldset>
+      </Form>
     )
   }
 

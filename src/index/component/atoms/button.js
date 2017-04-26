@@ -1,4 +1,7 @@
-.button {
+import React from 'react'
+import styled from 'styled-components'
+
+const Button = styled.button`
   display: block;
   width: 100%;
   max-width: 300px;
@@ -13,4 +16,11 @@
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+`
+
+export default ({ type = 'button', value = '', onClick }) => {
+  if (onClick) {
+    return <Button type={type} onClick={() => onClick()}>{value}</Button>
+  }
+  return <Button type={type}>{value}</Button>
 }
