@@ -6,7 +6,6 @@
   "scripts": {
     "start": "electron app",
     "test": "jest && standard --fix",
-    "flow": "flow check && flow stop",
     "build": "webpack",
     "watch": "webpack -w",
     "release": "npm run webpack && npm run release:darwin && npm run release:win32",

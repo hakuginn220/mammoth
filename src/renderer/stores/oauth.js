@@ -1,4 +1,3 @@
-// @flow
 import { Map, Record } from 'immutable'
 import { ReduceStore } from 'flux/utils'
 import * as Action from '../actions/oauth'

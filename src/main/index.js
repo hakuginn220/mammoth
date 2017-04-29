@@ -1,8 +1,7 @@
-// @flow
 import path from 'path'
 import url from 'url'
 import { app, BrowserWindow } from 'electron'
-import ipc from './ipc'
+import utils from './utils'
 
 let win
 
@@ -29,7 +28,7 @@ var createWindow = () => {
 }
 
 app.on('ready', () => {
-  ipc()
+  utils()
   createWindow()
 })
 
