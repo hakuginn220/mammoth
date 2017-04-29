@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 import Input from '../atoms/input'
-import * as Action from '../../actions/oauth'
+import * as Actions from '../../actions/oauth'
 
 const Form = styled.form`
   display: block;
@@ -33,63 +33,76 @@ const Field = styled.div`
 `
 
 export default class Oauth extends Component {
-  _updateValue (event) {
+  changeHostname (event) {
     event.preventDefault()
-    Action.oauthUpdateValue(event.target.value)
+    Actions.changeHostname(event.target.value)
   }
 
-  _submitValue (event) {
+  changeEmail (event) {
     event.preventDefault()
-    Action.oauthUpdateResult(this.props.oauth.get('value'))
+    Actions.changeEmail(event.target.value)
   }
 
-  _render0 () {
+  changePassword (event) {
+    event.preventDefault()
+    Actions.changePassword(event.target.value)
+  }
+
+  submitOauth (event) {
+    event.preventDefault()
+    Actions.submitOauth({
+      hostname: this.props.oauth.get('hostname'),
+      email: this.props.oauth.get('email'),
+      password: this.props.oauth.get('password'),
+    })
+  }
+
+  render () {
     return (
-      <Form onSubmit={this._submitValue.bind(this)}>
+      <Form onSubmit={this.submitOauth.bind(this)}>
         <Fieldset>
           <Legend>インスタンスの追加</Legend>
           <Field>
             <Input
-              label='ドメインを入力'
-              id='instance_domain_name'
-              value={this.props.oauth.get('value')}
+              label='インスタンス先'
+              id='hostname'
+              type='text'
+              value={this.props.oauth.get('hostname')}
               placeholder='mastodon.cloud'
-              onChange={this._updateValue.bind(this)}
+              onChange={this.changeHostname.bind(this)}
             />
           </Field>
           <Field>
-            {this.props.oauth.get('error')}
+            <Input
+              label='メールアドレス'
+              id='email'
+              type='text'
+              value={this.props.oauth.get('email')}
+              placeholder='test@sample.com'
+              onChange={this.changeEmail.bind(this)}
+            />
           </Field>
           <Field>
-            <Button
-              type='submit'
-              value='次へ'
+            <Input
+              label='パスワード'
+              id='password'
+              type='password'
+              value={this.props.oauth.get('password')}
+              placeholder='********'
+              onChange={this.changePassword.bind(this)}
             />
+          </Field>
+          <Field>
+            <div>{this.props.oauth.get('error')}</div>
+            <div>{this.props.oauth.getIn(['result', 'title'])}</div>
+            <div>{this.props.oauth.getIn(['result', 'url'])}</div>
+            <div>{this.props.oauth.getIn(['result', 'email'])}</div>
+          </Field>
+          <Field>
+            <Button type='submit' value='次へ' />
           </Field>
         </Fieldset>
       </Form>
     )
-  }
-
-  _render1 () {
-    return (
-      <div>
-        <div>インスタンス確認中</div>
-        <div>{this.props.oauth.get('value')}</div>
-        <div>リザルト情報</div>
-        <div>{this.props.oauth.getIn(['result', 'title'])}</div>
-        <div>{this.props.oauth.getIn(['result', 'url'])}</div>
-        <div>{this.props.oauth.getIn(['result', 'email'])}</div>
-      </div>
-    )
-  }
-
-  render () {
-    switch (this.props.oauth.get('action')) {
-      case 1:
-        return this._render1()
-      default:
-        return this._render0()
-    }
   }
 }

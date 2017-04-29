@@ -8,7 +8,7 @@ const Button = styled.button`
   margin: 0 auto;
   padding: 0.6em 1.2em;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 4px;
   box-sizing: border-box;
   outline: 0;
@@ -16,6 +16,11 @@ const Button = styled.button`
   color: rgba(255, 255, 255, 1);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  &:hover,
+  &:active,
+  &:focus {
+    border: 1px solid rgba(255, 255, 255, 1);
+  }
 `
 
 export default ({ type = 'button', value = '', onClick }) => {

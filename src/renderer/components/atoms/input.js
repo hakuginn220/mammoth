@@ -31,9 +31,9 @@ const Input = styled.input`
   }
 `
 
-export default ({ label = '', id = '', value = '', placeholder = '', onChange }) => (
+export default ({ label = '', id = '', type = 'text', value = '', placeholder = '', onChange }) => (
   <Field>
     <Label htmlFor={id}>{label}</Label>
-    <Input type='text' id={id} value={value} placeholder={placeholder} onChange={onChange} />
+    <Input type={type} id={id} value={value} placeholder={placeholder} onChange={onChange} />
   </Field>
 )

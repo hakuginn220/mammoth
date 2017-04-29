@@ -17,7 +17,7 @@ const Item = styled.li`
   }
 `
 
-const Target = styled.a`
+const Button = styled.a`
   display: block;
   padding: 16px 0;
   border-radius: 8px;
@@ -33,13 +33,13 @@ export default class Nav extends Component {
     return (
       <List>
         <Item>
-          <Target>+</Target>
+          <Button>+</Button>
         </Item>
         <Item>
-          <Target>01</Target>
+          <Button>01</Button>
         </Item>
         <Item>
-          <Target>02</Target>
+          <Button>02</Button>
         </Item>
       </List>
     )

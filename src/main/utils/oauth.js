@@ -1,27 +1,27 @@
 import { ipcMain, net } from 'electron'
-
-export const OATH_SUBMIT = 'OATH_SUBMIT'
-export const OATH_SUBMIT_FAIL = 'OATH_SUBMIT_FAIL'
-export const OATH_SUBMIT_SUCCESS = 'OATH_SUBMIT_SUCCESS'
+import * as Actions from '../actions/oauth'
 
 export default () => {
-  ipcMain.on(OATH_SUBMIT, (event, value) => {
+  ipcMain.on(Actions.SUBMIT_OAUTH, (event, value) => {
+    console.log(value)
+
     const request = net.request({
       method: 'GET',
       protocol: 'https:',
-      hostname: value,
+      hostname: value.hostname,
       port: 443,
       path: '/api/v1/instance'
     })
 
     request.on('error', (error) => {
       console.log(error)
-      event.sender.send(OATH_SUBMIT_FAIL)
+      event.sender.send(Actions.SUBMIT_OAUTH_FAIL)
     })
 
     request.on('response', (response) => {
       response.on('data', (data) => {
-        event.sender.send(OATH_SUBMIT_SUCCESS, JSON.parse(data))
+        console.log(JSON.parse(data))
+        event.sender.send(Actions.SUBMIT_OAUTH_SUCCESS, JSON.parse(data))
       })
     })
 

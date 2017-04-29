@@ -1,49 +1,57 @@
 import { ipcRenderer } from 'electron'
 import Dispatcher from '../dispatcher'
+import * as Actions from '../../main/actions/oauth'
 
-export const OAUTH_UPDATE_VALUE = 'OAUTH_UPDATE_VALUE'
-export const OAUTH_UPDATE_RESULT = 'OAUTH_UPDATE_RESULT'
-export const OAUTH_UPDATE_ERROR = 'OAUTH_UPDATE_ERROR'
-export const OAUTH_UPDATE_ACTION = 'OAUTH_UPDATE_ACTION'
+export const CHANGE_HOSTNAME = 'CHANGE_HOSTNAME'
+export const CHANGE_EMAIL = 'CHANGE_EMAIL'
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
+export const UPDATE_RESULT = 'UPDATE_RESULT'
+export const UPDATE_ERROR = 'UPDATE_ERROR'
+export const UPDATE_ACTION = 'UPDATE_ACTION'
 
-export const oauthUpdateValue = (value) => {
+export const changeHostname = (value = '') => {
   Dispatcher.dispatch({
-    type: OAUTH_UPDATE_VALUE,
+    type: CHANGE_HOSTNAME,
     value: value
   })
 }
 
-export const oauthUpdateResult = (value) => {
+export const changeEmail = (value = '') => {
   Dispatcher.dispatch({
-    type: OAUTH_UPDATE_ERROR,
-    value: ''
-  })
-
-  ipcRenderer.send('OATH_SUBMIT', value)
-
-  ipcRenderer.on('OATH_SUBMIT_FAIL', (event) => {
-    Dispatcher.dispatch({
-      type: OAUTH_UPDATE_RESULT,
-      value: {}
-    })
-    Dispatcher.dispatch({
-      type: OAUTH_UPDATE_ERROR,
-      value: '接続に失敗しました'
-    })
-    Dispatcher.dispatch({
-      type: OAUTH_UPDATE_ACTION,
-      value: 0
-    })
-  })
-
-  ipcRenderer.on('OATH_SUBMIT_SUCCESS', (event, result) => {
-    Dispatcher.dispatch({
-      type: OAUTH_UPDATE_RESULT,
-      value: result
-    })
-    Dispatcher.dispatch({
-      type: OAUTH_UPDATE_ACTION,
-      value: 1
-    })
+    type: CHANGE_EMAIL,
+    value: value
   })
 }
+
+export const changePassword = (value = '') => {
+  Dispatcher.dispatch({
+    type: CHANGE_PASSWORD,
+    value: value
+  })
+}
+
+export const submitOauth = (value = {}) => {
+  ipcRenderer.send(Actions.SUBMIT_OAUTH, value)
+}
+
+ipcRenderer.on(Actions.SUBMIT_OAUTH_FAIL, (event) => {
+  Dispatcher.dispatch({
+    type: UPDATE_RESULT,
+    value: {}
+  })
+  Dispatcher.dispatch({
+    type: UPDATE_ERROR,
+    value: '接続に失敗しました'
+  })
+})
+
+ipcRenderer.on(Actions.SUBMIT_OAUTH_SUCCESS, (event, value) => {
+  Dispatcher.dispatch({
+    type: UPDATE_RESULT,
+    value: value
+  })
+  Dispatcher.dispatch({
+    type: UPDATE_ERROR,
+    value: ''
+  })
+})
