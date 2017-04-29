@@ -5,10 +5,11 @@
   "description": "test client for mastodon",
   "scripts": {
     "start": "electron app",
-    "test": "standard --fix && flow-typed install && flow check",
+    "test": "jest && standard --fix",
+    "flow": "flow check && flow stop",
     "build": "webpack",
     "watch": "webpack -w",
-    "release": "npm run build && npm run release:darwin && npm run release:win32",
+    "release": "npm run webpack && npm run release:darwin && npm run release:win32",
     "release:darwin": "electron-packager app --platform=darwin --arch=x64 --out=dist --asar=true --icon=app/images/icon.icns",
     "release:win32": "electron-packager app --platform=win32 --arch=ia32 --out=dist --asar=true --icon=app/images/icon.ico"
   },
@@ -32,7 +33,7 @@
     "electron": "^1.6.6",
     "electron-packager": "^8.6.0",
     "flow-bin": "^0.45.0",
-    "flow-typed": "^2.1.2",
+    "jest": "^19.0.2",
     "standard": "^10.0.2",
     "webpack": "^2.4.1"
   },

@@ -1,0 +1,19 @@
+declare module 'electron' {
+  declare var exports: any
+}
+
+declare module 'flux' {
+  declare var exports: any
+}
+
+declare module 'flux/utils' {
+  declare var exports: any
+}
+
+declare module 'immutable' {
+  declare var exports: any
+}
+
+declare module 'styled-components' {
+  declare var exports: any
+}

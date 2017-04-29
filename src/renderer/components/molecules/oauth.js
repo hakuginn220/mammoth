@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 import Input from '../atoms/input'
-import * as Action from '../../action/oauth'
+import * as Action from '../../actions/oauth'
 
 const Form = styled.form`
   display: block;

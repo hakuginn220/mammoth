@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Container } from 'flux/utils'
 import Dispatcher from './dispatcher'
-import App from './component'
-import OauthStore from './store/oauth'
+import App from './components'
+import OauthStore from './stores/oauth'
 
 const oauth = new OauthStore(Dispatcher)
 
