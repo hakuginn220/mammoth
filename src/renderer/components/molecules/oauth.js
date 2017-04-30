@@ -88,15 +88,12 @@ export default class Oauth extends Component {
               id='password'
               type='password'
               value={this.props.oauth.get('password')}
-              placeholder='********'
+              placeholder='password'
               onChange={this.changePassword.bind(this)}
             />
           </Field>
           <Field>
-            <div>{this.props.oauth.get('error')}</div>
-            <div>{this.props.oauth.getIn(['result', 'title'])}</div>
-            <div>{this.props.oauth.getIn(['result', 'email'])}</div>
-            <div>{this.props.oauth.getIn(['result', 'version'])}</div>
+            <div>{this.props.oauth.get('result')}</div>
           </Field>
           <Field>
             <Button type='submit' value='次へ' />

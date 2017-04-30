@@ -2,22 +2,13 @@ import { Map, Record } from 'immutable'
 import { ReduceStore } from 'flux/utils'
 import * as Action from '../actions/oauth'
 
-const Instance = Record({
-  title: '',
-  url: '',
-  email: '',
-  description: '',
-  version: ''
-})
-
 export default class OauthStore extends ReduceStore {
   getInitialState () {
     return Map({
       hostname: '',
       email: '',
       password: '',
-      error: '',
-      result: Instance()
+      result: ''
     })
   }
 
@@ -30,9 +21,7 @@ export default class OauthStore extends ReduceStore {
       case Action.CHANGE_PASSWORD:
         return state.set('password', action.value)
       case Action.UPDATE_RESULT:
-        return state.set('result', Instance(action.value))
-      case Action.UPDATE_ERROR:
-        return state.set('error', action.value)
+        return state.set('result', action.value)
       default:
         return state
     }
