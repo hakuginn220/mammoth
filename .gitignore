@@ -6,9 +6,6 @@ Thumbs.db
 npm-debug.log*
 node_modules
 
-# flow
-flow-typed/npm
-
 # webpack
 *.min.js
 

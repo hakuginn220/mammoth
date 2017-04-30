@@ -1,6 +1,4 @@
-import { ipcRenderer } from 'electron'
 import Dispatcher from '../dispatcher'
-import * as Actions from '../../main/actions/oauth'
 
 export const CHANGE_HOSTNAME = 'CHANGE_HOSTNAME'
 export const CHANGE_EMAIL = 'CHANGE_EMAIL'
@@ -31,27 +29,26 @@ export const changePassword = (value = '') => {
 }
 
 export const submitOauth = (value = {}) => {
-  ipcRenderer.send(Actions.SUBMIT_OAUTH, value)
+  fetch(`https://${value.hostname}/api/v1/instance`)
+  .then((response) => response.json())
+  .then((data) => {
+    Dispatcher.dispatch({
+      type: UPDATE_RESULT,
+      value: data
+    })
+    Dispatcher.dispatch({
+      type: UPDATE_ERROR,
+      value: ''
+    })
+  })
+  .catch((error) => {
+    Dispatcher.dispatch({
+      type: UPDATE_RESULT,
+      value: {}
+    })
+    Dispatcher.dispatch({
+      type: UPDATE_ERROR,
+      value: '接続に失敗しました'
+    })
+  })
 }
-
-ipcRenderer.on(Actions.SUBMIT_OAUTH_FAIL, (event) => {
-  Dispatcher.dispatch({
-    type: UPDATE_RESULT,
-    value: {}
-  })
-  Dispatcher.dispatch({
-    type: UPDATE_ERROR,
-    value: '接続に失敗しました'
-  })
-})
-
-ipcRenderer.on(Actions.SUBMIT_OAUTH_SUCCESS, (event, value) => {
-  Dispatcher.dispatch({
-    type: UPDATE_RESULT,
-    value: value
-  })
-  Dispatcher.dispatch({
-    type: UPDATE_ERROR,
-    value: ''
-  })
-})
