@@ -2,6 +2,10 @@ declare module 'electron' {
   declare var exports: any
 }
 
+declare module 'isomorphic-fetch' {
+  declare var exports: any
+}
+
 declare module 'flux' {
   declare var exports: any
 }
