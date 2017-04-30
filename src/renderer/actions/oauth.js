@@ -20,6 +20,7 @@ export const changePassword = (value = '') => {
 }
 
 export const submitOauth = (value = {}) => {
+  const { fetch, FormData } = window
   const domain = `https://${value.hostname}`
   const apps = new FormData()
   apps.append('client_name', 'mammoth')
@@ -63,12 +64,12 @@ export const submitOauth = (value = {}) => {
       })
     })
     .catch((error2) => {
-      throw error2
       Dispatcher.dispatch({ type: UPDATE_RESULT, value: 'ERROR: /oauth/token' })
+      throw error2
     })
   })
   .catch((error1) => {
-    throw error1
     Dispatcher.dispatch({ type: UPDATE_RESULT, value: 'ERROR: /api/v1/apps' })
+    throw error1
   })
 }

@@ -33,10 +33,5 @@
     "jest": "^19.0.2",
     "standard": "^10.0.2",
     "webpack": "^2.4.1"
-  },
-  "standard": {
-    "globals": [
-      "fetch"
-    ]
   }
 }
