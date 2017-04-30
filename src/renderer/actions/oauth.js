@@ -29,7 +29,7 @@ export const changePassword = (value = '') => {
 }
 
 export const submitOauth = (value = {}) => {
-  fetch(`https://${value.hostname}/api/v1/instance`)
+  window.fetch(`https://${value.hostname}/api/v1/instance`)
   .then((response) => response.json())
   .then((data) => {
     Dispatcher.dispatch({
@@ -41,7 +41,7 @@ export const submitOauth = (value = {}) => {
       value: ''
     })
   })
-  .catch((error) => {
+  .catch(() => {
     Dispatcher.dispatch({
       type: UPDATE_RESULT,
       value: {}
