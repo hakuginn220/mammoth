@@ -53,7 +53,7 @@ export default class Oauth extends Component {
     Actions.submitOauth({
       hostname: this.props.oauth.get('hostname'),
       email: this.props.oauth.get('email'),
-      password: this.props.oauth.get('password'),
+      password: this.props.oauth.get('password')
     })
   }
 
@@ -95,8 +95,8 @@ export default class Oauth extends Component {
           <Field>
             <div>{this.props.oauth.get('error')}</div>
             <div>{this.props.oauth.getIn(['result', 'title'])}</div>
-            <div>{this.props.oauth.getIn(['result', 'url'])}</div>
             <div>{this.props.oauth.getIn(['result', 'email'])}</div>
+            <div>{this.props.oauth.getIn(['result', 'version'])}</div>
           </Field>
           <Field>
             <Button type='submit' value='次へ' />

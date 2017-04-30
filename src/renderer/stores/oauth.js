@@ -6,7 +6,8 @@ const Instance = Record({
   title: '',
   url: '',
   email: '',
-  description: ''
+  description: '',
+  version: ''
 })
 
 export default class OauthStore extends ReduceStore {
