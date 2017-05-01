@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
 import { ReduceStore } from 'flux/utils'
-import * as Action from '../actions/oauth'
+import * as Actions from '../actions/oauth'
 
 export default class OauthStore extends ReduceStore {
   getInitialState () {
@@ -14,13 +14,13 @@ export default class OauthStore extends ReduceStore {
 
   reduce (state, action) {
     switch (action.type) {
-      case Action.CHANGE_HOSTNAME:
+      case Actions.CHANGE_HOSTNAME:
         return state.set('hostname', action.value)
-      case Action.CHANGE_EMAIL:
+      case Actions.CHANGE_EMAIL:
         return state.set('email', action.value)
-      case Action.CHANGE_PASSWORD:
+      case Actions.CHANGE_PASSWORD:
         return state.set('password', action.value)
-      case Action.UPDATE_RESULT:
+      case Actions.UPDATE_RESULT:
         return state.set('result', action.value)
       default:
         return state

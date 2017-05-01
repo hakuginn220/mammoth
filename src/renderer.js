@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Container } from 'flux/utils'
 import Dispatcher from './dispatcher'
-import App from './components'
-import OauthStore from './stores/oauth'
+import Views from './views'
+import OauthStore from './store/oauth'
 
 const oauth = new OauthStore(Dispatcher)
 
@@ -20,7 +20,7 @@ class Root extends Component {
 
   render () {
     console.log(this.state.oauth.toJSON())
-    return <App {...this.state} />
+    return <Views {...this.state} />
   }
 }
 

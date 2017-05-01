@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 import Input from '../atoms/input'
-import * as Actions from '../../actions/oauth'
+import * as ActionCreators from '../../action-creators/oauth'
 
 const Form = styled.form`
   display: block;
@@ -35,22 +35,22 @@ const Field = styled.div`
 export default class Oauth extends Component {
   changeHostname (event) {
     event.preventDefault()
-    Actions.changeHostname(event.target.value)
+    ActionCreators.changeHostname(event.target.value)
   }
 
   changeEmail (event) {
     event.preventDefault()
-    Actions.changeEmail(event.target.value)
+    ActionCreators.changeEmail(event.target.value)
   }
 
   changePassword (event) {
     event.preventDefault()
-    Actions.changePassword(event.target.value)
+    ActionCreators.changePassword(event.target.value)
   }
 
   submitOauth (event) {
     event.preventDefault()
-    Actions.submitOauth({
+    ActionCreators.submitOauth({
       hostname: this.props.oauth.get('hostname'),
       email: this.props.oauth.get('email'),
       password: this.props.oauth.get('password')

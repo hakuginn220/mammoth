@@ -39,7 +39,7 @@ const Inner02 = styled.div`
   width: calc(100% - 72px);
 `
 
-export default class App extends Component {
+export default class Views extends Component {
   render () {
     return (
       <Wrapper>

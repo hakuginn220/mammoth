@@ -19,14 +19,14 @@ const option = {
 export default [
   Object.assign({}, option, {
     entry: {
-      renderer: path.join(__dirname, 'src/renderer/index.js')
+      renderer: path.join(__dirname, 'src/renderer.js')
     },
     target: 'electron-renderer'
   }),
 
   Object.assign({}, option, {
     entry: {
-      main: path.join(__dirname, 'src/main/index.js')
+      main: path.join(__dirname, 'src/main.js')
     },
     target: 'electron',
     node: {

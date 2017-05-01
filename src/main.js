@@ -1,7 +1,7 @@
 import path from 'path'
 import url from 'url'
-import { app, BrowserWindow } from 'electron'
-import utils from './utils'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import * as Actions from './actions/oauth'
 
 let win
 
@@ -28,7 +28,6 @@ var createWindow = () => {
 }
 
 app.on('ready', () => {
-  utils()
   createWindow()
 })
 
@@ -42,4 +41,8 @@ app.on('activate', () => {
   if (win === null) {
     createWindow()
   }
+})
+
+ipcMain.on(Actions.CREATE_INSTANCE, (event, accessToken) => {
+  console.log(accessToken)
 })

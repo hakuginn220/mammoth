@@ -1,22 +1,17 @@
 import { ipcRenderer } from 'electron'
 import Dispatcher from '../dispatcher'
-
-export const CHANGE_HOSTNAME = 'CHANGE_HOSTNAME'
-export const CHANGE_EMAIL = 'CHANGE_EMAIL'
-export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
-export const UPDATE_RESULT = 'UPDATE_RESULT'
-export const CREATE_INSTANCE = 'CREATE_INSTANCE'
+import * as Actions from '../actions/oauth'
 
 export const changeHostname = (value = '') => {
-  Dispatcher.dispatch({ type: CHANGE_HOSTNAME, value: value })
+  Dispatcher.dispatch({ type: Actions.CHANGE_HOSTNAME, value: value })
 }
 
 export const changeEmail = (value = '') => {
-  Dispatcher.dispatch({ type: CHANGE_EMAIL, value: value })
+  Dispatcher.dispatch({ type: Actions.CHANGE_EMAIL, value: value })
 }
 
 export const changePassword = (value = '') => {
-  Dispatcher.dispatch({ type: CHANGE_PASSWORD, value: value })
+  Dispatcher.dispatch({ type: Actions.CHANGE_PASSWORD, value: value })
 }
 
 export const submitOauth = (value = {}) => {
@@ -32,11 +27,9 @@ export const submitOauth = (value = {}) => {
     method: 'post',
     body: apps
   })
-  .then((response1) => {
-    return response1.json()
-  })
+  .then((response1) => response1.json())
   .then((appsToken) => {
-    Dispatcher.dispatch({ type: UPDATE_RESULT, value: 'SUCCESS: Create Apps Token' })
+    Dispatcher.dispatch({ type: Actions.UPDATE_RESULT, value: 'SUCCESS: Create Apps Token' })
 
     const oauthToken = new FormData()
     oauthToken.append('client_id', appsToken.client_id)
@@ -51,25 +44,23 @@ export const submitOauth = (value = {}) => {
       method: 'post',
       body: oauthToken
     })
-    .then((response2) => {
-      return response2.json()
-    })
+    .then((response2) => response2.json())
     .then((accessToken) => {
-      Dispatcher.dispatch({ type: UPDATE_RESULT, value: 'SUCCESS: Create Access Token' })
+      Dispatcher.dispatch({ type: Actions.UPDATE_RESULT, value: 'SUCCESS: Create Access Token' })
 
-      ipcRenderer.send(CREATE_INSTANCE, {
+      ipcRenderer.send(Actions.CREATE_INSTANCE, {
         domain: domain,
         apps: appsToken,
         access: accessToken
       })
     })
     .catch((error2) => {
-      Dispatcher.dispatch({ type: UPDATE_RESULT, value: 'ERROR: /oauth/token' })
+      Dispatcher.dispatch({ type: Actions.UPDATE_RESULT, value: 'ERROR: /oauth/token' })
       throw error2
     })
   })
   .catch((error1) => {
-    Dispatcher.dispatch({ type: UPDATE_RESULT, value: 'ERROR: /api/v1/apps' })
+    Dispatcher.dispatch({ type: Actions.UPDATE_RESULT, value: 'ERROR: /api/v1/apps' })
     throw error1
   })
 }
