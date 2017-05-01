@@ -19,7 +19,6 @@ class Root extends Component {
   }
 
   render () {
-    console.log(this.state.oauth.toJSON())
     return <Views {...this.state} />
   }
 }
