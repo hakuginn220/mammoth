@@ -23,23 +23,42 @@ injectGlobal`
 `
 
 const Wrapper = styled.div`
-  display: flex;
+  display: block;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `
 
 const Inner01 = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   display: block;
   width: 72px;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Inner02 = styled.div`
+  position: fixed;
+  top: 0;
+  left: 72px;
   display: block;
   width: calc(100% - 72px);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
-export default class Views extends Component {
+export default class App extends Component {
   render () {
     return (
       <Wrapper>

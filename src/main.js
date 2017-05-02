@@ -1,24 +1,6 @@
-import fs from 'fs'
 import path from 'path'
 import url from 'url'
-import { app, BrowserWindow, ipcMain } from 'electron'
-import * as Actions from './actions/oauth'
-
-const userData = app.getPath('userData')
-const userConfig = path.join(userData, 'config.json')
-
-fs.readFile(userConfig, 'utf8', (error) => {
-  if (error) fs.writeFile(userConfig, JSON.stringify({}, null, '    '))
-})
-
-ipcMain.on(Actions.CREATE_INSTANCE, (event, accessToken) => {
-  fs.readFile(userConfig, 'utf8', (error, json) => {
-    let config = JSON.parse(json)
-    config = Object.assign(config, accessToken)
-    config = JSON.stringify(config, null, '    ')
-    fs.writeFile(userConfig, config)
-  })
-})
+import { app, BrowserWindow } from 'electron'
 
 let win
 

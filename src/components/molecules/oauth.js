@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 import Input from '../atoms/input'
-import * as ActionCreators from '../../action-creators/oauth'
+import * as actions from '../../actions/oauth'
 
 const Form = styled.form`
   display: block;
@@ -21,10 +21,7 @@ const Legend = styled.legend`
   display: block;
   width: 100%;
   margin: 0;
-  padding: 0 0 0.5em;
-  border-bottom: 1px solid white;
   font-size: 20px;
-  text-align: center;
 `
 
 const Field = styled.div`
@@ -35,22 +32,22 @@ const Field = styled.div`
 export default class Oauth extends Component {
   changeHostname (event) {
     event.preventDefault()
-    ActionCreators.changeHostname(event.target.value)
+    actions.changeHostname(event.target.value)
   }
 
   changeEmail (event) {
     event.preventDefault()
-    ActionCreators.changeEmail(event.target.value)
+    actions.changeEmail(event.target.value)
   }
 
   changePassword (event) {
     event.preventDefault()
-    ActionCreators.changePassword(event.target.value)
+    actions.changePassword(event.target.value)
   }
 
   submitOauth (event) {
     event.preventDefault()
-    ActionCreators.submitOauth({
+    actions.submitOauth({
       hostname: this.props.oauth.get('hostname'),
       email: this.props.oauth.get('email'),
       password: this.props.oauth.get('password')
@@ -93,7 +90,7 @@ export default class Oauth extends Component {
             />
           </Field>
           <Field>
-            <div>{this.props.oauth.get('result')}</div>
+            <div>{this.props.oauth.get('message')}</div>
           </Field>
           <Field>
             <Button type='submit' value='次へ' />
