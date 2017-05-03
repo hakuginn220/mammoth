@@ -6,12 +6,12 @@ import Nav from './organisms/nav'
 injectGlobal`
   :root {
     --background-primary: #282c37;
-    --button-primary: #282c37;
     --text-primary: white;
   }
 
   ::selection {
     background: var(--text-primary);
+    color: var(--background-primary);
   }
 
   body {
