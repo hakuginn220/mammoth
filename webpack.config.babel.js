@@ -23,7 +23,6 @@ export default [
     },
     target: 'electron-renderer'
   }),
-
   Object.assign({}, option, {
     entry: {
       main: path.join(__dirname, 'src/main.js')
