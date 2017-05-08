@@ -1,20 +1,16 @@
 import dispatcher from '../dispatcher'
-import MainStore from './main'
-import NavStore from './nav'
+import HistoryStore from './history'
 import OauthStore from './oauth'
 
-const main = new MainStore(dispatcher)
-const nav = new NavStore(dispatcher)
+const history = new HistoryStore(dispatcher)
 const oauth = new OauthStore(dispatcher)
 
 export const store = [
-  main,
-  nav,
+  history,
   oauth
 ]
 
 export const calculate = () => ({
-  main: main.getState(),
-  nav: nav.getState(),
+  history: history.getState(),
   oauth: oauth.getState()
 })

@@ -3,7 +3,6 @@ import { render } from 'react-dom'
 import { Container } from 'flux/utils'
 import { store, calculate } from './store'
 import App from './components'
-import './utils/history'
 
 class View extends Component {
   static getStores () {

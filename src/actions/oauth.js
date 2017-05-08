@@ -8,28 +8,28 @@ export const UPDATE_DOMAIN = 'OAUTH_UPDATE_DOMAIN'
 export const UPDATE_APPS = 'OAUTH_UPDATE_APPS'
 export const UPDATE_ACCESSTOKEN = 'OAUTH_UPDATE_ACCESSTOKEN'
 
-export const changeHostname = (value = '') => {
+export function changeHostname (value = '') {
   dispatch(CHANGE_HOSTNAME, value)
 }
 
-export const changeEmail = (value = '') => {
+export function changeEmail (value = '') {
   dispatch(CHANGE_EMAIL, value)
 }
 
-export const changePassword = (value = '') => {
+export function changePassword (value = '') {
   dispatch(CHANGE_PASSWORD, value)
 }
 
-export const submitOauth = (value = {}) => {
+export function submitOauth (value = {}) {
   const domain = `https://${value.hostname}`
   dispatch(UPDATE_DOMAIN, domain)
 
-  const apps = new FormData()
+  const apps = new window.FormData()
   apps.append('client_name', 'mammoth')
   apps.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob')
   apps.append('scopes', 'read write follow')
 
-  fetch(`${domain}/api/v1/apps`, {
+  window.fetch(`${domain}/api/v1/apps`, {
     mode: 'cors',
     method: 'post',
     body: apps
@@ -39,7 +39,7 @@ export const submitOauth = (value = {}) => {
     dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Apps Token')
     dispatch(UPDATE_APPS, appsToken)
 
-    const oauthToken = new FormData()
+    const oauthToken = new window.FormData()
     oauthToken.append('client_id', appsToken.client_id)
     oauthToken.append('client_secret', appsToken.client_secret)
     oauthToken.append('grant_type', 'password')
@@ -47,7 +47,7 @@ export const submitOauth = (value = {}) => {
     oauthToken.append('password', value.password)
     oauthToken.append('scope', 'read write follow')
 
-    fetch(`${domain}/oauth/token`, {
+    window.fetch(`${domain}/oauth/token`, {
       mode: 'cors',
       method: 'post',
       body: oauthToken

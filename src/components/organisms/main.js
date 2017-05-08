@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Init from '../molecules/init'
 import Oauth from '../molecules/oauth'
-import Timeline from '../molecules/timeline'
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,14 +18,14 @@ const Inner = styled.div`
 `
 
 export default class Main extends Component {
-  switch () {
-    switch (this.props.main.get('current')) {
-      case 'timeline':
-        return <Timeline {...this.props} />
-      case 'oauth':
+  router () {
+    switch (this.props.history.get('pathname')) {
+      case '/oauth':
         return <Oauth {...this.props} />
-      default:
+      case '/':
         return <Init {...this.props} />
+      default:
+        return null
     }
   }
 
@@ -34,7 +33,7 @@ export default class Main extends Component {
     return (
       <Wrapper>
         <Inner>
-          {this.switch()}
+          {this.router()}
         </Inner>
       </Wrapper>
     )

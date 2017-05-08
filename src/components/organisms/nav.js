@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import * as actions from '../../actions/nav'
+import * as actions from '../../actions/history'
 
 const List = styled.ul`
   display: flex;
@@ -29,6 +29,7 @@ const Button = styled.a`
   border: 2px solid var(--background-primary);
   box-sizing: border-box;
   color: var(--text-primary);
+  text-decoration: none;
   transition: all 0.2s ease-in-out;
   &:active,
   &:hover,
@@ -38,26 +39,19 @@ const Button = styled.a`
 `
 
 export default class Nav extends Component {
-  selectInstance (event) {
+  transition (event) {
     event.preventDefault()
-    actions.selectInstance()
-  }
-
-  oauthInstance (event) {
-    event.preventDefault()
-    actions.oauthInstance()
+    actions.push(event.currentTarget.href)
   }
 
   render () {
     return (
       <List>
-        {this.props.nav.map((value) =>
-          <Item key={value.get('id')}>
-            <Button onClick={this.selectInstance.bind(this)}>{value.get('name')}</Button>
-          </Item>
-        )}
-        <Item>
-          <Button onClick={this.oauthInstance.bind(this)}>+</Button>
+        <Item key='home'>
+          <Button href='/' onClick={this.transition.bind(this)}>home</Button>
+        </Item>
+        <Item key='oauth'>
+          <Button href='/oauth' onClick={this.transition.bind(this)}>+</Button>
         </Item>
       </List>
     )
