@@ -41,17 +41,17 @@ const Button = styled.a`
 export default class Nav extends Component {
   transition (event) {
     event.preventDefault()
-    actions.push(event.currentTarget.href)
+    actions.push(event.target.pathname)
   }
 
   render () {
     return (
       <List>
         <Item key='home'>
-          <Button href='/' onClick={this.transition.bind(this)}>home</Button>
+          <Button href='/' onClick={this.transition}>home</Button>
         </Item>
         <Item key='oauth'>
-          <Button href='/oauth' onClick={this.transition.bind(this)}>+</Button>
+          <Button href='/oauth' onClick={this.transition}>+</Button>
         </Item>
       </List>
     )
