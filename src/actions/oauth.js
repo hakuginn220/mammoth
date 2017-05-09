@@ -33,8 +33,8 @@ export async function submitOauth (value = {}) {
     const accessToken = await api.oauthToken(domain, value, appsToken)
     dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Access Token')
     dispatch(UPDATE_ACCESSTOKEN, accessToken)
-  } catch (e) {
-    dispatch(UPDATE_MESSAGE, `ERROR: ${domain}`)
-    throw e
+  } catch (error) {
+    dispatch(UPDATE_MESSAGE, `${error}`)
+    throw error
   }
 }
