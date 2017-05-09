@@ -41,7 +41,7 @@ const Button = styled.a`
 export default class Nav extends Component {
   transition (event) {
     event.preventDefault()
-    actions.push(event.target.pathname)
+    actions.updateHistoryPathname(event.currentTarget.pathname)
   }
 
   render () {

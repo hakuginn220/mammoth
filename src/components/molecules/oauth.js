@@ -30,64 +30,28 @@ const Field = styled.div`
 `
 
 export default class Oauth extends Component {
-  changeHostname (event) {
+  submitOauthToken (event) {
     event.preventDefault()
-    actions.changeHostname(event.target.value)
-  }
-
-  changeEmail (event) {
-    event.preventDefault()
-    actions.changeEmail(event.target.value)
-  }
-
-  changePassword (event) {
-    event.preventDefault()
-    actions.changePassword(event.target.value)
-  }
-
-  submitOauth (event) {
-    event.preventDefault()
-    actions.submitOauth({
-      hostname: this.props.oauth.get('hostname'),
-      email: this.props.oauth.get('email'),
-      password: this.props.oauth.get('password')
+    actions.submitOauthToken({
+      hostname: event.currentTarget.hostname.value,
+      email: event.currentTarget.email.value,
+      password: event.currentTarget.password.value
     })
   }
 
   render () {
     return (
-      <Form onSubmit={this.submitOauth.bind(this)}>
+      <Form onSubmit={this.submitOauthToken}>
         <Fieldset>
           <Legend>インスタンスの追加</Legend>
           <Field>
-            <Input
-              label='インスタンス先'
-              id='hostname'
-              type='text'
-              value={this.props.oauth.get('hostname')}
-              placeholder='mastodon.cloud'
-              onChange={this.changeHostname.bind(this)}
-            />
+            <Input type='text' label='インスタンス先' id='hostname' name='hostname' placeholder='mastodon.cloud' />
           </Field>
           <Field>
-            <Input
-              label='メールアドレス'
-              id='email'
-              type='text'
-              value={this.props.oauth.get('email')}
-              placeholder='test@sample.com'
-              onChange={this.changeEmail.bind(this)}
-            />
+            <Input type='email' label='メールアドレス' id='email' name='email' placeholder='test@sample.com' />
           </Field>
           <Field>
-            <Input
-              label='パスワード'
-              id='password'
-              type='password'
-              value={this.props.oauth.get('password')}
-              placeholder='password'
-              onChange={this.changePassword.bind(this)}
-            />
+            <Input type='password' label='パスワード' id='password' name='password' placeholder='password' />
           </Field>
           <Field>
             <div>{this.props.oauth.get('message')}</div>

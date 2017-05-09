@@ -26,6 +26,7 @@ const Button = styled.button`
 export default ({ type = 'button', value = '', onClick }) => {
   if (onClick) {
     return <Button type={type} onClick={() => onClick()}>{value}</Button>
+  } else {
+    return <Button type={type}>{value}</Button>
   }
-  return <Button type={type}>{value}</Button>
 }

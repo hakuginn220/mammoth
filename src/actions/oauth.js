@@ -1,40 +1,23 @@
 import { dispatch } from '../dispatcher'
 import * as api from '../utils/api'
 
-export const CHANGE_HOSTNAME = 'OAUTH_CHANGE_HOSTNAME'
-export const CHANGE_EMAIL = 'OAUTH_CHANGE_EMAIL'
-export const CHANGE_PASSWORD = 'OAUTH_CHANGE_PASSWORD'
-export const UPDATE_MESSAGE = 'OAUTH_UPDATE_MESSAGE'
-export const UPDATE_DOMAIN = 'OAUTH_UPDATE_DOMAIN'
-export const UPDATE_APPS = 'OAUTH_UPDATE_APPS'
-export const UPDATE_ACCESSTOKEN = 'OAUTH_UPDATE_ACCESSTOKEN'
+export const UPDATE_OAUTH_MESSAGE = 'UPDATE_OAUTH_MESSAGE'
+export const UPDATE_OAUTH_DOMAIN = 'UPDATE_OAUTH_DOMAIN'
+export const UPDATE_OAUTH_TOKEN = 'UPDATE_OAUTH_TOKEN'
 
-export function changeHostname (value = '') {
-  dispatch(CHANGE_HOSTNAME, value)
-}
-
-export function changeEmail (value = '') {
-  dispatch(CHANGE_EMAIL, value)
-}
-
-export function changePassword (value = '') {
-  dispatch(CHANGE_PASSWORD, value)
-}
-
-export async function submitOauth (value = {}) {
+export async function submitOauthToken (value = {}) {
   const domain = `https://${value.hostname}`
-  dispatch(UPDATE_DOMAIN, domain)
+  dispatch(UPDATE_OAUTH_DOMAIN, domain)
 
   try {
     const appsToken = await api.apps(domain)
-    dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Apps Token')
-    dispatch(UPDATE_APPS, appsToken)
-
+    dispatch(UPDATE_OAUTH_MESSAGE, 'SUCCESS: Create Apps Token')
     const accessToken = await api.oauthToken(domain, value, appsToken)
-    dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Access Token')
-    dispatch(UPDATE_ACCESSTOKEN, accessToken)
+    dispatch(UPDATE_OAUTH_MESSAGE, 'SUCCESS: Create Access Token')
+    const token = Object.assign({}, { domain }, appsToken, accessToken)
+    dispatch(UPDATE_OAUTH_TOKEN, token)
   } catch (error) {
-    dispatch(UPDATE_MESSAGE, `${error}`)
+    dispatch(UPDATE_OAUTH_MESSAGE, `${error}`)
     throw error
   }
 }

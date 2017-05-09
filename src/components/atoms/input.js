@@ -31,9 +31,20 @@ const Input = styled.input`
   }
 `
 
-export default ({ label = '', id = '', type = 'text', value = '', placeholder = '', onChange }) => (
-  <Field>
-    <Label htmlFor={id}>{label}</Label>
-    <Input type={type} id={id} value={value} placeholder={placeholder} onChange={onChange} required='required' />
-  </Field>
-)
+export default ({ type = 'text', label = '', id = '', name = '', placeholder = '', value, onChange }) => {
+  if (value) {
+    return (
+      <Field>
+        <Label htmlFor={id}>{label}</Label>
+        <Input type={type} id={id} name={name} placeholder={placeholder} value={value} onChange={onChange} required='required' />
+      </Field>
+    )
+  } else {
+    return (
+      <Field>
+        <Label htmlFor={id}>{label}</Label>
+        <Input type={type} id={id} name={name} placeholder={placeholder} onChange={onChange} required='required' />
+      </Field>
+    )
+  }
+}

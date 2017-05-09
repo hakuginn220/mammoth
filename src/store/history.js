@@ -13,7 +13,7 @@ export default class HistoryStore extends ReduceStore {
 
   reduce (state, action) {
     switch (action.type) {
-      case actions.PUSH:
+      case actions.UPDATE_HISTORY_PATHNAME:
         return state.set('pathname', action.value)
       default:
         return state

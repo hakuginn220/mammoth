@@ -1,7 +1,7 @@
 import { dispatch } from '../dispatcher'
 
-export const PUSH = 'HISTORY_PUSH'
+export const UPDATE_HISTORY_PATHNAME = 'UPDATE_HISTORY_PATHNAME'
 
-export function push (value = '/') {
-  dispatch(PUSH, value)
+export function updateHistoryPathname (value = '/') {
+  dispatch(UPDATE_HISTORY_PATHNAME, value)
 }
