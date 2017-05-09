@@ -1,4 +1,5 @@
 import { dispatch } from '../dispatcher'
+import * as api from '../utils/api'
 
 export const CHANGE_HOSTNAME = 'OAUTH_CHANGE_HOSTNAME'
 export const CHANGE_EMAIL = 'OAUTH_CHANGE_EMAIL'
@@ -24,46 +25,21 @@ export function submitOauth (value = {}) {
   const domain = `https://${value.hostname}`
   dispatch(UPDATE_DOMAIN, domain)
 
-  const apps = new window.FormData()
-  apps.append('client_name', 'mammoth')
-  apps.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob')
-  apps.append('scopes', 'read write follow')
+  api.apps(domain, (appsToken) => {
+    if (appsToken === null) {
+      dispatch(UPDATE_MESSAGE, `ERROR: ${domain}/api/v1/apps`)
+    } else {
+      dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Apps Token')
+      dispatch(UPDATE_APPS, appsToken)
 
-  window.fetch(`${domain}/api/v1/apps`, {
-    mode: 'cors',
-    method: 'post',
-    body: apps
-  })
-  .then((response1) => response1.json())
-  .then((appsToken) => {
-    dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Apps Token')
-    dispatch(UPDATE_APPS, appsToken)
-
-    const oauthToken = new window.FormData()
-    oauthToken.append('client_id', appsToken.client_id)
-    oauthToken.append('client_secret', appsToken.client_secret)
-    oauthToken.append('grant_type', 'password')
-    oauthToken.append('username', value.email)
-    oauthToken.append('password', value.password)
-    oauthToken.append('scope', 'read write follow')
-
-    window.fetch(`${domain}/oauth/token`, {
-      mode: 'cors',
-      method: 'post',
-      body: oauthToken
-    })
-    .then((response2) => response2.json())
-    .then((accessToken) => {
-      dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Access Token')
-      dispatch(UPDATE_ACCESSTOKEN, accessToken)
-    })
-    .catch((error2) => {
-      dispatch(UPDATE_MESSAGE, `ERROR: ${domain}/oauth/token`)
-      throw error2
-    })
-  })
-  .catch((error1) => {
-    dispatch(UPDATE_MESSAGE, `ERROR: ${domain}/api/v1/apps`)
-    throw error1
+      api.oauthToken(domain, value, appsToken, (accessToken) => {
+        if (accessToken === null) {
+          dispatch(UPDATE_MESSAGE, `ERROR: ${domain}/oauth/token`)
+        } else {
+          dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Access Token')
+          dispatch(UPDATE_ACCESSTOKEN, accessToken)
+        }
+      })
+    }
   })
 }
