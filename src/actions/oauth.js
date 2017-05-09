@@ -21,25 +21,20 @@ export function changePassword (value = '') {
   dispatch(CHANGE_PASSWORD, value)
 }
 
-export function submitOauth (value = {}) {
+export async function submitOauth (value = {}) {
   const domain = `https://${value.hostname}`
   dispatch(UPDATE_DOMAIN, domain)
 
-  api.apps(domain, (appsToken) => {
-    if (appsToken === null) {
-      dispatch(UPDATE_MESSAGE, `ERROR: ${domain}/api/v1/apps`)
-    } else {
-      dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Apps Token')
-      dispatch(UPDATE_APPS, appsToken)
+  try {
+    const appsToken = await api.apps(domain)
+    dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Apps Token')
+    dispatch(UPDATE_APPS, appsToken)
 
-      api.oauthToken(domain, value, appsToken, (accessToken) => {
-        if (accessToken === null) {
-          dispatch(UPDATE_MESSAGE, `ERROR: ${domain}/oauth/token`)
-        } else {
-          dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Access Token')
-          dispatch(UPDATE_ACCESSTOKEN, accessToken)
-        }
-      })
-    }
-  })
+    const accessToken = await api.oauthToken(domain, value, appsToken)
+    dispatch(UPDATE_MESSAGE, 'SUCCESS: Create Access Token')
+    dispatch(UPDATE_ACCESSTOKEN, accessToken)
+  } catch (e) {
+    dispatch(UPDATE_MESSAGE, `ERROR: ${domain}`)
+    throw e
+  }
 }
