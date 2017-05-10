@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 import Input from '../atoms/input'
-import * as actions from '../../actions'
+import * as actions from '../actions'
 
 const Form = styled.form`
   display: block;
@@ -30,9 +30,9 @@ const Field = styled.div`
 `
 
 export default class Oauth extends Component {
-  submitOauthToken (event) {
+  submitOauth (event) {
     event.preventDefault()
-    actions.submitOauthToken({
+    actions.submitOauth({
       hostname: event.currentTarget.hostname.value,
       email: event.currentTarget.email.value,
       password: event.currentTarget.password.value
@@ -41,7 +41,7 @@ export default class Oauth extends Component {
 
   render () {
     return (
-      <Form onSubmit={this.submitOauthToken}>
+      <Form onSubmit={this.submitOauth}>
         <Fieldset>
           <Legend>インスタンスの追加</Legend>
           <Field>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import * as actions from '../../actions'
+import * as actions from '../actions'
 
 const List = styled.ul`
   display: flex;
@@ -41,7 +41,21 @@ const Button = styled.a`
 export default class Nav extends Component {
   transition (event) {
     event.preventDefault()
-    actions.updateHistoryPathname(event.currentTarget.pathname)
+    const path = event.currentTarget.pathname + event.currentTarget.search
+    actions.push(path)
+  }
+
+  eachItem (list) {
+    return list.map((item) => {
+      const href = `/timeline?search=${item.get('hostname')}`
+      return (
+        <Item key={item.get('hostname')}>
+          <Button href={href} onClick={this.transition}>
+            {item.get('id')}
+          </Button>
+        </Item>
+      )
+    })
   }
 
   render () {
@@ -50,6 +64,7 @@ export default class Nav extends Component {
         <Item key='home'>
           <Button href='/' onClick={this.transition}>home</Button>
         </Item>
+        {this.eachItem(this.props.store.get('instance').toArray())}
         <Item key='oauth'>
           <Button href='/oauth' onClick={this.transition}>+</Button>
         </Item>

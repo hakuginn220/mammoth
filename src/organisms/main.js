@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Init from '../molecules/init'
+import Home from '../molecules/home'
 import Oauth from '../molecules/oauth'
+import Timeline from '../molecules/timeline'
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,12 +20,13 @@ const Inner = styled.div`
 
 export default class Main extends Component {
   router () {
-    console.log(this.props.store.getIn(['history', 'pathname']))
     switch (this.props.store.getIn(['history', 'pathname'])) {
+      case '/timeline':
+        return <Timeline {...this.props} />
       case '/oauth':
         return <Oauth {...this.props} />
       case '/':
-        return <Init {...this.props} />
+        return <Home {...this.props} />
       default:
         return null
     }

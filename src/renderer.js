@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Container } from 'flux/utils'
 import dispatcher from './dispatcher'
 import Store from './store'
-import App from './components'
+import App from './templates/app'
 
 const store = new Store(dispatcher)
 
@@ -19,6 +19,7 @@ class View extends Component {
   }
 
   render () {
+    console.log(this.state.store.toJS())
     return <App {...this.state} />
   }
 }
