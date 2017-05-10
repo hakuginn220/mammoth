@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Container } from 'flux/utils'
-import { store, calculate } from './store'
+import dispatcher from './dispatcher'
+import Store from './store'
 import App from './components'
+
+const store = new Store(dispatcher)
 
 class View extends Component {
   static getStores () {
-    return store
+    return [store]
   }
 
   static calculateState (prevState) {
-    return calculate()
+    return {
+      store: store.getState()
+    }
   }
 
   render () {
