@@ -41,8 +41,10 @@ const Button = styled.a`
 export default class Nav extends Component {
   transition (event) {
     event.preventDefault()
-    const path = event.currentTarget.pathname + event.currentTarget.search
-    actions.push(path)
+    const pathname = event.currentTarget.pathname.replace(/\/C:/, '')
+    const hash = event.currentTarget.hash
+    const search = event.currentTarget.search
+    actions.push(pathname + hash + search)
   }
 
   eachItem (list) {
