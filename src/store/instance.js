@@ -1,4 +1,4 @@
-import { List, Record } from 'immutable'
+import { List } from 'immutable'
 import { ReduceStore } from 'flux/utils'
 import * as actions from '../actions/instance'
 

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "mammoth",
+  "name": "mammoth-develop",
   "version": "0.1.0",
   "description": "test client for mastodon",
   "scripts": {
