@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Button from '../atoms/button'
 import Input from '../atoms/input'
-import * as actions from '../../actions/oauth'
+import * as actions from '../../actions'
 
 const Form = styled.form`
   display: block;
@@ -54,7 +54,7 @@ export default class Oauth extends Component {
             <Input type='password' label='パスワード' id='password' name='password' placeholder='password' />
           </Field>
           <Field>
-            <div>{this.props.store.getIn('oauth', 'message')}</div>
+            <div>{this.props.store.getIn(['oauth', 'message'])}</div>
           </Field>
           <Field>
             <Button type='submit' value='次へ' />

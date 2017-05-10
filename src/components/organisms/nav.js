@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import * as actions from '../../actions/history'
+import * as actions from '../../actions'
 
 const List = styled.ul`
   display: flex;

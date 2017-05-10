@@ -19,7 +19,8 @@ const Inner = styled.div`
 
 export default class Main extends Component {
   router () {
-    switch (this.props.store.getIn('history', 'pathname')) {
+    console.log(this.props.store.getIn(['history', 'pathname']))
+    switch (this.props.store.getIn(['history', 'pathname'])) {
       case '/oauth':
         return <Oauth {...this.props} />
       case '/':

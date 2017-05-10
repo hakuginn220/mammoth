@@ -1,8 +1,6 @@
 import { fromJS } from 'immutable'
 import { ReduceStore } from 'flux/utils'
-import * as history from './actions/history'
-import * as instance from './actions/instance'
-import * as oauth from './actions/oauth'
+import * as actions from './actions'
 
 export default class Store extends ReduceStore {
   getInitialState () {
@@ -23,18 +21,18 @@ export default class Store extends ReduceStore {
 
   reduce (state, action) {
     switch (action.type) {
-      case history.UPDATE_HISTORY_PATHNAME:
-        return state.setIn('history', 'pathname', action.value)
-      case instance.INSTANCE_ADD:
+      case actions.UPDATE_HISTORY_PATHNAME:
+        return state.setIn(['history', 'pathname'], action.value)
+      case actions.ADD_INSTANCE_LIST:
         return state.update('instance', (instance) => instance.push(action.value))
-      case instance.INSTANCE_REMOVE:
+      case actions.REMOVE_INSTANCE_LIST:
         return state.update('instance', (instance) => instance.delete(action.value))
-      case oauth.UPDATE_OAUTH_MESSAGE:
-        return state.setIn('oauth', 'message', action.value)
-      case oauth.UPDATE_OAUTH_DOMAIN:
-        return state.setIn('oauth', 'domain', action.value)
-      case oauth.UPDATE_OAUTH_TOKEN:
-        return state.setIn('oauth', 'token', action.value)
+      case actions.UPDATE_OAUTH_MESSAGE:
+        return state.setIn(['oauth', 'message'], action.value)
+      case actions.UPDATE_OAUTH_DOMAIN:
+        return state.setIn(['oauth', 'domain'], action.value)
+      case actions.UPDATE_OAUTH_TOKEN:
+        return state.setIn(['oauth', 'token'], action.value)
       default:
         return state
     }
