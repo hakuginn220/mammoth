@@ -16,9 +16,15 @@ injectGlobal`
 
   body {
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     background: var(--background-primary);
     color: var(--text-primary);
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: 'Noto Sans', sans-serif;
   }
 `
 
