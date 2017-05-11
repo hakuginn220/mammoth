@@ -14,8 +14,8 @@ export function push (path = '/') {
 export async function submitOauth (input = {}) {
   dispatch(UPDATE_OAUTH_MESSAGE, '')
   try {
-    const appsToken = await api.apps(`https://${input.hostname}`)
-    const accessToken = await api.oauthToken(`https://${input.hostname}`, input, appsToken)
+    const appsToken = await api.postApps(`https://${input.hostname}`)
+    const accessToken = await api.postOauthToken(`https://${input.hostname}`, input, appsToken)
     const instance = Object.assign({ hostname: input.hostname }, appsToken, accessToken)
     addInstance(instance)
   } catch (error) {

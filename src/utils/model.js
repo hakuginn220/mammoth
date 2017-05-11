@@ -118,3 +118,19 @@ export const Tag = Record({
   name: '',
   url: ''
 })
+
+// There is no document
+export const Apps = Record({
+  id: 0,
+  redirect_uri: '',
+  client_id: '',
+  client_secret: ''
+})
+
+// There is no document
+export const AccessToken = Record({
+  access_token: '',
+  token_type: '',
+  scope: '',
+  created_at: 0
+})
