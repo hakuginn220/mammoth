@@ -26,6 +26,12 @@ class View extends Component {
 
 const ViewContainer = Container.create(View)
 
+const { localStorage, addEventListener } = window
+
+addEventListener('beforeunload', () => {
+  localStorage.setItem('store', JSON.stringify(store.getState().toJS()))
+})
+
 render(
   <ViewContainer />,
   document.getElementById('root')

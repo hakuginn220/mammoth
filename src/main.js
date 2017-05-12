@@ -4,7 +4,7 @@ import { app, BrowserWindow } from 'electron'
 
 let win
 
-var createWindow = () => {
+function createWindow () {
   win = new BrowserWindow({
     width: 800,
     height: 600,

@@ -2,19 +2,27 @@ import { fromJS, Map } from 'immutable'
 import { ReduceStore } from 'flux/utils'
 import * as actions from './actions'
 
+const store = {
+  history: {
+    hash: '',
+    pathname: '/',
+    search: ''
+  },
+  instance: [],
+  oauth: {
+    message: ''
+  }
+}
+
+const { localStorage } = window
+
+if (localStorage.getItem('store') === null) {
+  localStorage.setItem('store', JSON.stringify(store))
+}
+
 export default class Store extends ReduceStore {
   getInitialState () {
-    return fromJS({
-      history: {
-        hash: '',
-        pathname: '/',
-        search: ''
-      },
-      instance: [],
-      oauth: {
-        message: ''
-      }
-    })
+    return fromJS(JSON.parse(localStorage.getItem('store')))
   }
 
   reduce (state, action) {
