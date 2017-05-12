@@ -1,18 +1,18 @@
 const { fetch, Headers, FormData } = window
 
-function headers (accessToken) {
+const headers = (accessToken) => {
   const headers = new Headers()
   headers.append('Authorization', `Bearer ${accessToken}`)
   return headers
 }
 
-async function request (url, option) {
+const request = async (url, option) => {
   const response = await fetch(url, option)
   const json = await response.json()
   return json
 }
 
-export async function postOauthToken (instance, apps) {
+export const postOauthToken = async (instance, apps) => {
   const body = new FormData()
   body.append('client_id', apps.client_id)
   body.append('client_secret', apps.client_secret)
@@ -32,7 +32,7 @@ export async function postOauthToken (instance, apps) {
   return json
 }
 
-export async function getAccountsId (instance, id) {
+export const getAccountsId = async (instance, id) => {
   const url = `https://${instance.hostname}/api/v1/accounts/${id}`
 
   const json = await request(url, {
@@ -44,7 +44,7 @@ export async function getAccountsId (instance, id) {
   return json
 }
 
-export async function getAccountsVerifyCredentials (instance) {
+export const getAccountsVerifyCredentials = async (instance) => {
   const url = `https://${instance.hostname}/api/v1/accounts/verify_credentials`
 
   const json = await request(url, {
@@ -56,7 +56,7 @@ export async function getAccountsVerifyCredentials (instance) {
   return json
 }
 
-export async function patchAccountsUpdateCredentials (instance) {
+export const patchAccountsUpdateCredentials = async (instance) => {
   const url = `https://${instance.hostname}/api/v1/accounts/update_credentials`
 
   const json = await request(url, {
@@ -68,7 +68,7 @@ export async function patchAccountsUpdateCredentials (instance) {
   return json
 }
 
-export async function postApps (instance) {
+export const postApps = async (instance) => {
   const body = new FormData()
   body.append('client_name', 'mammoth')
   body.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob')
@@ -85,7 +85,7 @@ export async function postApps (instance) {
   return json
 }
 
-export async function getTimelinesHome (instance) {
+export const getTimelinesHome = async (instance) => {
   const url = `https://${instance.hostname}/api/v1/timelines/home`
 
   const json = await request(url, {
@@ -97,7 +97,7 @@ export async function getTimelinesHome (instance) {
   return json
 }
 
-export async function getTimelinesPublic (instance) {
+export const getTimelinesPublic = async (instance) => {
   const url = `https://${instance.hostname}/api/v1/timelines/public`
 
   const json = await request(url, {
@@ -109,7 +109,7 @@ export async function getTimelinesPublic (instance) {
   return json
 }
 
-export async function getTimelinesTag (instance, hashtag) {
+export const getTimelinesTag = async (instance, hashtag) => {
   const url = `https://${instance.hostname}/api/v1/timelines/tag/${hashtag}`
 
   const json = await request(url, {

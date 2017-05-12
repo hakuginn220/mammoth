@@ -1,4 +1,4 @@
-export function parser (path = '/') {
+export const parser = (path = '/') => {
   const parser = document.createElement('a')
   parser.href = `https://localhost:3000${path}`
   return {

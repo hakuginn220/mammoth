@@ -7,11 +7,11 @@ export const ADD_INSTANCE = 'ADD_INSTANCE'
 export const REMOVE_INSTANCE = 'REMOVE_INSTANCE'
 export const UPDATE_OAUTH_MESSAGE = 'UPDATE_OAUTH_MESSAGE'
 
-export function push (path = '/') {
+export const push = (path = '/') => {
   dispatch(PUSH_HISTORY, history.parser(path))
 }
 
-export async function submitOauth (input = {}) {
+export const submitOauth = async (input = {}) => {
   dispatch(UPDATE_OAUTH_MESSAGE, '')
   try {
     const appsToken = await api.postApps(input)
@@ -24,11 +24,11 @@ export async function submitOauth (input = {}) {
   }
 }
 
-export function addInstance (instance = {}) {
+export const addInstance = (instance = {}) => {
   dispatch(ADD_INSTANCE, instance)
   push(`/timeline?search=${instance.hostname}`)
 }
 
-export function removeInstance (index = 0) {
+export const removeInstance = (index = 0) => {
   dispatch(REMOVE_INSTANCE, index)
 }
