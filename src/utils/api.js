@@ -62,7 +62,19 @@ export const apps = async ({ hostname }) => {
 }
 
 export const timelinesHome = async ({ hostname, accessToken }) => {
-  const url = `https://${hostname}/api/v1/timelines/home`
+  const url = `https://${hostname}/api/v1/timelines/public`
+
+  const response = await request(url, {
+    mode: 'cors',
+    method: 'GET',
+    headers: headers(accessToken)
+  })
+
+  return response
+}
+
+export const timelinesPublic = async ({ hostname, accessToken }) => {
+  const url = `https://${hostname}/api/v1/timelines/public`
 
   const response = await request(url, {
     mode: 'cors',

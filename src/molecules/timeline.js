@@ -7,12 +7,19 @@ export default class Timeline extends Component {
   }
 
   status (array) {
-    return array.map((value, index) => {
+    return array.reverse().map((value, index) => {
+      const avatar = value.getIn(['account', 'avatar'])
+      const name = value.getIn(['account', 'display_name'])
+      const id = value.getIn(['account', 'acct'])
+      const content = value.get('content').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
+      const created = value.get('created_at')
+
       return (
         <li key={index}>
-          <div>{value.getIn(['account', 'display_name'])} @{value.getIn(['account', 'username'])}</div>
-          <div>{value.get('content').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')}</div>
-          <div>{value.get('created_at')}</div>
+          <img src={avatar} />
+          <div>{name} @{id}</div>
+          <div>{content}</div>
+          <div>{created}</div>
         </li>
       )
     })

@@ -1,5 +1,5 @@
 import { ReduceStore } from 'flux/utils'
-import { fromJS, Map } from 'immutable'
+import { fromJS, Map, List } from 'immutable'
 import * as actions from './actions'
 
 const { localStorage } = window
@@ -22,7 +22,8 @@ if (localStorage.getItem('store') === null) {
 
 export default class Store extends ReduceStore {
   getInitialState () {
-    return fromJS(JSON.parse(localStorage.getItem('store')))
+    const object = JSON.parse(localStorage.getItem('store'))
+    return fromJS(object).set('timelines', List())
   }
 
   reduce (state, action) {

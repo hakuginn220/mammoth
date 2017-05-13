@@ -36,16 +36,36 @@ export const oauth = async ({ hostname, email, password }) => {
 export const timeline = async (store) => {
   const search = history.search(store.getIn(['history', 'search']))
 
-  const { hostname, accessToken } = store.get('accounts').find((current) => {
-    return search.get('hostname') === current.get('hostname')
-  }).toJS()
+  const account = store.get('accounts').find((value) => {
+    return search.get('hostname') === value.get('hostname')
+  })
+
+  const { hostname, accessToken } = account.toJS()
 
   try {
-    const list = await api.timelinesHome({ hostname, accessToken })
-    list.forEach((status) => {
-      dispatch(ADD_TIMELINES, status)
-    })
+    const list = await api.timelinesPublic({ hostname, accessToken })
+
+    list.reverse().forEach((status) => dispatch(ADD_TIMELINES, status))
   } catch (error) {
     throw error
   }
+
+  const { WebSocket } = window
+  const stream = new WebSocket(`ws://${hostname}/api/v1/streaming?access_token=${accessToken}&stream=public`)
+  stream.addEventListener('close', (event) => {
+    console.log(event)
+  })
+  stream.addEventListener('error', (event) => {
+    console.log(event)
+    stream.close()
+  })
+  stream.addEventListener('open', (event) => {
+    console.log(event)
+  })
+  stream.addEventListener('message', (event) => {
+    const message = JSON.parse(event.data)
+    if (message.event === 'update') {
+      dispatch(ADD_TIMELINES, JSON.parse(message.payload))
+    }
+  })
 }
