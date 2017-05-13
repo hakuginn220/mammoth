@@ -2,7 +2,7 @@
 
 electron client for mastodon
 
-# install
+## install
 
 please download on [release page](https://github.com/hakuginn220/mammoth/releases)
 
