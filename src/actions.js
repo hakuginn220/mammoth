@@ -3,35 +3,29 @@ import * as api from './utils/api'
 import * as history from './utils/history'
 
 export const PUSH_HISTORY = 'PUSH_HISTORY'
-export const OAUTH_MESSAGE = 'OAUTH_MESSAGE'
-export const ADD_INSTANCE = 'ADD_INSTANCE'
-export const REMOVE_INSTANCE = 'REMOVE_INSTANCE'
+export const UPDATE_MESSAGE = 'UPDATE_MESSAGE'
+export const ADD_ACCOUNTS = 'ADD_ACCOUNTS'
 
 export const push = (path = '/') => {
   dispatch(PUSH_HISTORY, history.parser(path))
 }
 
-export const oauth = async (input = {}) => {
-  dispatch(OAUTH_MESSAGE, '')
+export const oauth = async ({ hostname, email, password }) => {
   try {
-    const appsToken = await api.postApps(input)
-    const accessToken = await api.postOauthToken(input, appsToken)
-    const instance = Object.assign({ hostname: input.hostname }, appsToken, accessToken)
-    addInstance(instance)
+    dispatch(UPDATE_MESSAGE, '')
+
+    const apps = await api.apps({ hostname })
+
+    const oauthToken = await api.oauthToken({ hostname, email, password }, apps)
+    const { access_token } = oauthToken
+
+    const accountsVerifyCredentials = await api.accountsVerifyCredentials({ hostname, access_token })
+    const { id } = accountsVerifyCredentials
+
+    dispatch(ADD_ACCOUNTS, { hostname, access_token, id })
+    dispatch(PUSH_HISTORY, history.parser(`/timeline?hostname=${hostname}`))
   } catch (error) {
-    dispatch(OAUTH_MESSAGE, `${error}`)
+    dispatch(UPDATE_MESSAGE, `${error}`)
     throw error
   }
-}
-
-export const addInstance = (instance = {}) => {
-  dispatch(ADD_INSTANCE, instance)
-  push(`/timeline?hostname=${instance.hostname}`)
-}
-
-export const removeInstance = (index = 0) => {
-  dispatch(REMOVE_INSTANCE, index)
-}
-
-export const getTimelinesHome = (instance = {}) => {
 }

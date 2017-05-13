@@ -7,9 +7,9 @@ export default class Timeline extends Component {
   render () {
     return (
       <div>
-        <h2>home</h2>
+        <h2>timeline</h2>
         <ul>
-          <li>timeline</li>
+          <li>test01</li>
         </ul>
       </div>
     )

@@ -1,8 +1,8 @@
 const { fetch, Headers, FormData } = window
 
-const headers = (accessToken) => {
+const headers = (access_token) => {
   const headers = new Headers()
-  headers.append('Authorization', `Bearer ${accessToken}`)
+  headers.append('Authorization', `Bearer ${access_token}`)
   return headers
 }
 
@@ -12,16 +12,16 @@ const request = async (url, option) => {
   return json
 }
 
-export const postOauthToken = async (instance, apps) => {
+export const oauthToken = async ({ hostname, email, password }, apps) => {
   const body = new FormData()
   body.append('client_id', apps.client_id)
   body.append('client_secret', apps.client_secret)
   body.append('grant_type', 'password')
-  body.append('username', instance.email)
-  body.append('password', instance.password)
+  body.append('username', email)
+  body.append('password', password)
   body.append('scope', 'read write follow')
 
-  const url = `https://${instance.hostname}/oauth/token`
+  const url = `https://${hostname}/oauth/token`
 
   const json = await request(url, {
     mode: 'cors',
@@ -32,49 +32,25 @@ export const postOauthToken = async (instance, apps) => {
   return json
 }
 
-export const getAccountsId = async (instance, id) => {
-  const url = `https://${instance.hostname}/api/v1/accounts/${id}`
+export const accountsVerifyCredentials = async ({ hostname, access_token }) => {
+  const url = `https://${hostname}/api/v1/accounts/verify_credentials`
 
   const json = await request(url, {
     mode: 'cors',
     method: 'GET',
-    headers: headers(instance.access_token)
+    headers: headers(access_token)
   })
 
   return json
 }
 
-export const getAccountsVerifyCredentials = async (instance) => {
-  const url = `https://${instance.hostname}/api/v1/accounts/verify_credentials`
-
-  const json = await request(url, {
-    mode: 'cors',
-    method: 'GET',
-    headers: headers(instance.access_token)
-  })
-
-  return json
-}
-
-export const patchAccountsUpdateCredentials = async (instance) => {
-  const url = `https://${instance.hostname}/api/v1/accounts/update_credentials`
-
-  const json = await request(url, {
-    mode: 'cors',
-    method: 'PATCH',
-    headers: headers(instance.access_token)
-  })
-
-  return json
-}
-
-export const postApps = async (instance) => {
+export const apps = async ({ hostname }) => {
   const body = new FormData()
   body.append('client_name', 'mammoth')
   body.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob')
   body.append('scopes', 'read write follow')
 
-  const url = `https://${instance.hostname}/api/v1/apps`
+  const url = `https://${hostname}/api/v1/apps`
 
   const json = await request(url, {
     mode: 'cors',
@@ -85,37 +61,13 @@ export const postApps = async (instance) => {
   return json
 }
 
-export const getTimelinesHome = async (instance) => {
-  const url = `https://${instance.hostname}/api/v1/timelines/home`
+export const timelinesHome = async ({ hostname, access_token }) => {
+  const url = `https://${hostname}/api/v1/timelines/home`
 
   const json = await request(url, {
     mode: 'cors',
     method: 'GET',
-    headers: headers(instance.access_token)
-  })
-
-  return json
-}
-
-export const getTimelinesPublic = async (instance) => {
-  const url = `https://${instance.hostname}/api/v1/timelines/public`
-
-  const json = await request(url, {
-    mode: 'cors',
-    method: 'GET',
-    headers: headers(instance.access_token)
-  })
-
-  return json
-}
-
-export const getTimelinesTag = async (instance, hashtag) => {
-  const url = `https://${instance.hostname}/api/v1/timelines/tag/${hashtag}`
-
-  const json = await request(url, {
-    mode: 'cors',
-    method: 'GET',
-    headers: headers(instance.access_token)
+    headers: headers(access_token)
   })
 
   return json

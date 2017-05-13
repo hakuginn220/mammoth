@@ -5,7 +5,12 @@ import dispatcher from './dispatcher'
 import Store from './store'
 import App from './templates/app'
 
+const { localStorage, addEventListener } = window
 const store = new Store(dispatcher)
+
+addEventListener('beforeunload', () => {
+  localStorage.setItem('store', JSON.stringify(store.getState().toJS()))
+})
 
 class View extends Component {
   static getStores () {
@@ -25,12 +30,6 @@ class View extends Component {
 }
 
 const ViewContainer = Container.create(View)
-
-const { localStorage, addEventListener } = window
-
-addEventListener('beforeunload', () => {
-  localStorage.setItem('store', JSON.stringify(store.getState().toJS()))
-})
 
 render(
   <ViewContainer />,

@@ -31,9 +31,7 @@ const Button = styled.a`
   color: var(--text-primary);
   text-decoration: none;
   transition: all 0.2s ease-in-out;
-  &:active,
-  &:hover,
-  &:focus {
+  &:hover {
     border: 2px solid white;
   }
 `
@@ -45,11 +43,11 @@ export default class Nav extends Component {
     actions.push(pathname.replace(/\/C:/, '') + hash + search)
   }
 
-  eachItem (list) {
-    return list.map((item) => {
-      const href = `/timeline?hostname=${item.get('hostname')}&timeline=home`
+  accounts (array) {
+    return array.map((item, index) => {
+      const href = `/timeline?hostname=${item.get('hostname')}`
       return (
-        <Item key={item.get('hostname')}>
+        <Item key={index}>
           <Button href={href} onClick={this.transition}>
             {item.get('id')}
           </Button>
@@ -64,7 +62,7 @@ export default class Nav extends Component {
         <Item key='home'>
           <Button href='/' onClick={this.transition}>home</Button>
         </Item>
-        {this.eachItem(this.props.store.get('instance').toArray())}
+        {this.accounts(this.props.store.get('accounts').toArray())}
         <Item key='oauth'>
           <Button href='/oauth' onClick={this.transition}>+</Button>
         </Item>
