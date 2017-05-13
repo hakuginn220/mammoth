@@ -29,12 +29,12 @@ export default class Store extends ReduceStore {
     switch (action.type) {
       case actions.PUSH_HISTORY:
         return state.set('history', Map(action.value))
+      case actions.OAUTH_MESSAGE:
+        return state.setIn(['oauth', 'message'], action.value)
       case actions.ADD_INSTANCE:
         return state.update('instance', (instance) => instance.push(Map(action.value)))
       case actions.REMOVE_INSTANCE:
         return state.update('instance', (instance) => instance.delete(action.value))
-      case actions.UPDATE_OAUTH_MESSAGE:
-        return state.setIn(['oauth', 'message'], action.value)
       default:
         return state
     }

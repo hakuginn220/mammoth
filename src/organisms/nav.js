@@ -41,15 +41,13 @@ const Button = styled.a`
 export default class Nav extends Component {
   transition (event) {
     event.preventDefault()
-    const pathname = event.currentTarget.pathname.replace(/\/C:/, '')
-    const hash = event.currentTarget.hash
-    const search = event.currentTarget.search
-    actions.push(pathname + hash + search)
+    const { pathname, hash, search } = event.currentTarget
+    actions.push(pathname.replace(/\/C:/, '') + hash + search)
   }
 
   eachItem (list) {
     return list.map((item) => {
-      const href = `/timeline?search=${item.get('hostname')}`
+      const href = `/timeline?hostname=${item.get('hostname')}&timeline=home`
       return (
         <Item key={item.get('hostname')}>
           <Button href={href} onClick={this.transition}>

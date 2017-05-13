@@ -30,9 +30,9 @@ const Field = styled.div`
 `
 
 export default class Oauth extends Component {
-  submitOauth (event) {
+  oauth (event) {
     event.preventDefault()
-    actions.submitOauth({
+    actions.oauth({
       hostname: event.currentTarget.hostname.value,
       email: event.currentTarget.email.value,
       password: event.currentTarget.password.value
@@ -41,7 +41,7 @@ export default class Oauth extends Component {
 
   render () {
     return (
-      <Form onSubmit={this.submitOauth}>
+      <Form onSubmit={this.oauth}>
         <Fieldset>
           <Legend>インスタンスの追加</Legend>
           <Field>
