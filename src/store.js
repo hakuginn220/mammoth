@@ -4,7 +4,8 @@ import * as actions from './actions'
 
 const { localStorage } = window
 
-localStorage.clear()
+// development
+// localStorage.clear()
 
 if (localStorage.getItem('store') === null) {
   localStorage.setItem('store', JSON.stringify({
@@ -14,6 +15,7 @@ if (localStorage.getItem('store') === null) {
       search: ''
     },
     accounts: [],
+    timelines: [],
     message: ''
   }))
 }
@@ -30,7 +32,9 @@ export default class Store extends ReduceStore {
       case actions.UPDATE_MESSAGE:
         return state.set('message', action.value)
       case actions.ADD_ACCOUNTS:
-        return state.update('accounts', (account) => account.push(Map(action.value)))
+        return state.update('accounts', (list) => list.push(Map(action.value)))
+      case actions.ADD_TIMELINES:
+        return state.update('timelines', (list) => list.push(fromJS(action.value)))
       default:
         return state
     }

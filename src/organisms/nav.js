@@ -20,20 +20,24 @@ const Item = styled.li`
 
 const Button = styled.a`
   display: block;
-  padding: 16px 0;
+  width: 52px;
+  height: 52px;
   border-radius: 8px;
   text-align: center;
   font-size: 16px;
+  line-height: 52px;
   cursor: pointer;
   background: var(--background-primary);
-  border: 2px solid var(--background-primary);
-  box-sizing: border-box;
   color: var(--text-primary);
   text-decoration: none;
   transition: all 0.2s ease-in-out;
-  &:hover {
-    border: 2px solid white;
-  }
+`
+
+const Avatar = styled.img`
+  display: block;
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
 `
 
 export default class Nav extends Component {
@@ -49,7 +53,7 @@ export default class Nav extends Component {
       return (
         <Item key={index}>
           <Button href={href} onClick={this.transition}>
-            {item.get('id')}
+            <Avatar src={item.get('avatar')} alt={item.get('id')} />
           </Button>
         </Item>
       )

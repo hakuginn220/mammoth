@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Container } from 'flux/utils'
 import dispatcher from './dispatcher'
 import Store from './store'
-import App from './templates/app'
+import App from './templates/App'
 
 const { localStorage, addEventListener } = window
 const store = new Store(dispatcher)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from '../atoms/button'
-import Input from '../atoms/input'
+import Button from '../atoms/Button'
+import Input from '../atoms/Input'
 import * as actions from '../actions'
 
 const Form = styled.form`

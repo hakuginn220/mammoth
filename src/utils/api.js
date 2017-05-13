@@ -1,15 +1,15 @@
 const { fetch, Headers, FormData } = window
 
-const headers = (access_token) => {
+const headers = (accessToken) => {
   const headers = new Headers()
-  headers.append('Authorization', `Bearer ${access_token}`)
+  headers.append('Authorization', `Bearer ${accessToken}`)
   return headers
 }
 
 const request = async (url, option) => {
   const response = await fetch(url, option)
-  const json = await response.json()
-  return json
+  const obj = await response.json()
+  return obj
 }
 
 export const oauthToken = async ({ hostname, email, password }, apps) => {
@@ -23,25 +23,25 @@ export const oauthToken = async ({ hostname, email, password }, apps) => {
 
   const url = `https://${hostname}/oauth/token`
 
-  const json = await request(url, {
+  const response = await request(url, {
     mode: 'cors',
     method: 'POST',
     body: body
   })
 
-  return json
+  return response
 }
 
-export const accountsVerifyCredentials = async ({ hostname, access_token }) => {
+export const accountsVerifyCredentials = async ({ hostname, accessToken }) => {
   const url = `https://${hostname}/api/v1/accounts/verify_credentials`
 
-  const json = await request(url, {
+  const response = await request(url, {
     mode: 'cors',
     method: 'GET',
-    headers: headers(access_token)
+    headers: headers(accessToken)
   })
 
-  return json
+  return response
 }
 
 export const apps = async ({ hostname }) => {
@@ -52,23 +52,23 @@ export const apps = async ({ hostname }) => {
 
   const url = `https://${hostname}/api/v1/apps`
 
-  const json = await request(url, {
+  const response = await request(url, {
     mode: 'cors',
     method: 'POST',
     body: body
   })
 
-  return json
+  return response
 }
 
-export const timelinesHome = async ({ hostname, access_token }) => {
+export const timelinesHome = async ({ hostname, accessToken }) => {
   const url = `https://${hostname}/api/v1/timelines/home`
 
-  const json = await request(url, {
+  const response = await request(url, {
     mode: 'cors',
     method: 'GET',
-    headers: headers(access_token)
+    headers: headers(accessToken)
   })
 
-  return json
+  return response
 }
