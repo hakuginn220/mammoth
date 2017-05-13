@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Home from '../molecules/Home'
-import Oauth from '../molecules/Oauth'
-import Timeline from '../molecules/Timeline'
+import Home from '../molecules/home'
+import Oauth from '../molecules/oauth'
+import Timeline from '../molecules/timeline'
 
 const Wrapper = styled.div`
   display: flex;

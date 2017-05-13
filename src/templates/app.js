@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled, { injectGlobal } from 'styled-components'
-import Main from '../organisms/Main'
-import Nav from '../organisms/Nav'
+import Main from '../organisms/main'
+import Nav from '../organisms/nav'
 
 injectGlobal`
   :root {
