@@ -23,8 +23,6 @@ export const oauth = async ({ hostname, email, password }) => {
     const accountsVerifyCredentials = await api.accountsVerifyCredentials({ hostname, accessToken })
     const { id, avatar } = accountsVerifyCredentials
 
-    console.log(accountsVerifyCredentials)
-
     dispatch(ADD_ACCOUNTS, { hostname, accessToken, id, avatar })
     dispatch(PUSH_HISTORY, history.parser(`/timeline?hostname=${hostname}`))
   } catch (error) {
@@ -42,6 +40,7 @@ export const timeline = async (store) => {
 
   const { hostname, accessToken } = account.toJS()
 
+  /*
   try {
     const list = await api.timelinesPublic({ hostname, accessToken })
 
@@ -49,6 +48,7 @@ export const timeline = async (store) => {
   } catch (error) {
     throw error
   }
+  */
 
   const { WebSocket } = window
   const stream = new WebSocket(`ws://${hostname}/api/v1/streaming?access_token=${accessToken}&stream=public`)

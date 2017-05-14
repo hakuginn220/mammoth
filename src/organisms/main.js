@@ -14,8 +14,6 @@ const Wrapper = styled.div`
 const Inner = styled.div`
   display: block;
   width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
 `
 
 export default class Main extends Component {

@@ -1,5 +1,22 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+import Status from '../atoms/status'
 import * as actions from '../actions'
+
+const StatusList = styled.ul`
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+`
+
+const StatusItem = styled.li`
+  display: block;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  &:first-child {
+    border-top: 0;
+  }
+`
 
 export default class Timeline extends Component {
   componentWillMount () {
@@ -7,31 +24,20 @@ export default class Timeline extends Component {
   }
 
   status (array) {
-    return array.reverse().map((value, index) => {
-      const avatar = value.getIn(['account', 'avatar'])
-      const name = value.getIn(['account', 'display_name'])
-      const id = value.getIn(['account', 'acct'])
-      const content = value.get('content').replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
-      const created = value.get('created_at')
-
+    return array.reverse().map((status, index) => {
       return (
-        <li key={index}>
-          <img src={avatar} />
-          <div>{name} @{id}</div>
-          <div>{content}</div>
-          <div>{created}</div>
-        </li>
+        <StatusItem key={status.get('id')}>
+          <Status status={status} />
+        </StatusItem>
       )
     })
   }
 
   render () {
     return (
-      <div>
-        <ul>
-          {this.status(this.props.store.get('timelines').toArray())}
-        </ul>
-      </div>
+      <StatusList>
+        {this.status(this.props.store.get('timelines').toArray())}
+      </StatusList>
     )
   }
 }

@@ -7,6 +7,7 @@ import * as actions from '../actions'
 const Form = styled.form`
   display: block;
   margin: 0;
+  padding: 10px;
 `
 
 const Fieldset = styled.fieldset`

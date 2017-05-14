@@ -50,10 +50,14 @@ export default class Nav extends Component {
   accounts (array) {
     return array.map((item, index) => {
       const href = `/timeline?hostname=${item.get('hostname')}`
+      let avatar = item.get('avatar')
+      if (/missing.png/.test(avatar)) {
+        avatar = `https://${item.get('hostname') + item.get('avatar')}`
+      }
       return (
         <Item key={index}>
           <Button href={href} onClick={this.transition}>
-            <Avatar src={item.get('avatar')} alt={item.get('id')} />
+            <Avatar src={avatar} alt={item.get('id')} />
           </Button>
         </Item>
       )

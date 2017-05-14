@@ -9,7 +9,8 @@ const { localStorage, addEventListener } = window
 const store = new Store(dispatcher)
 
 addEventListener('beforeunload', () => {
-  localStorage.setItem('store', JSON.stringify(store.getState().toJS()))
+  const storage = store.getState().update('timelines', (list) => list.clear())
+  localStorage.setItem('store', JSON.stringify(storage))
 })
 
 class View extends Component {
