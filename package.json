@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "test client for mastodon",
   "scripts": {
+    "precommit": "lint-staged",
     "start": "electron app",
     "test": "jest && standard --fix",
     "build": "webpack",
@@ -32,13 +33,23 @@
     "electron": "^1.6.8",
     "electron-packager": "^8.7.0",
     "eslint-plugin-flowtype": "^2.33.0",
+    "husky": "^0.13.3",
     "jest": "^20.0.3",
+    "lint-staged": "^3.4.2",
     "react-test-renderer": "^15.5.4",
     "standard": "^10.0.2",
     "webpack": "^2.6.0"
   },
   "standard": {
-    "plugins": ["flowtype"],
+    "plugins": [
+      "flowtype"
+    ],
     "parser": "babel-eslint"
+  },
+  "lint-staged": {
+    "*.js": [
+      "standard --fix",
+      "git add"
+    ]
   }
 }
