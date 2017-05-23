@@ -5,7 +5,7 @@ import * as actions from './actions'
 const { localStorage } = window
 
 // development
-// localStorage.clear()
+localStorage.clear()
 
 if (localStorage.getItem('store') === null) {
   localStorage.setItem('store', JSON.stringify({

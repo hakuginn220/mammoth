@@ -48,6 +48,7 @@ export default class Nav extends Component {
   }
 
   accounts (array) {
+    if (!array) return null
     return array.map((item, index) => {
       const href = `/timeline?hostname=${item.get('hostname')}`
       let avatar = item.get('avatar')
