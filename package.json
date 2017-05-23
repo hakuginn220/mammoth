@@ -25,14 +25,20 @@
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "electron": "^1.6.8",
     "electron-packager": "^8.7.0",
+    "eslint-plugin-flowtype": "^2.33.0",
     "jest": "^20.0.3",
     "react-test-renderer": "^15.5.4",
     "standard": "^10.0.2",
     "webpack": "^2.6.0"
+  },
+  "standard": {
+    "plugins": ["flowtype"],
+    "parser": "babel-eslint"
   }
 }
