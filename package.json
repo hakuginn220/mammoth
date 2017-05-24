@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "electron app",
-    "test": "jest && standard --fix",
+    "test": "jest && flow && standard --fix",
     "build": "webpack",
     "watch": "webpack -w",
     "release": "npm run webpack && npm run release:darwin && npm run release:win32",
