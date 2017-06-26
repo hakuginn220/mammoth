@@ -1,4 +1,4 @@
-import path from 'path'
+const path = require('path')
 
 const option = {
   output: {
@@ -16,7 +16,7 @@ const option = {
   }
 }
 
-export default [
+module.exports = [
   Object.assign({}, option, {
     entry: {
       renderer: path.join(__dirname, 'src/renderer.js')
