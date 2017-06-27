@@ -19,13 +19,13 @@ const option = {
 module.exports = [
   Object.assign({}, option, {
     entry: {
-      renderer: path.join(__dirname, 'src/renderer.js')
+      renderer: path.join(__dirname, 'src/renderer/index.js')
     },
     target: 'electron-renderer'
   }),
   Object.assign({}, option, {
     entry: {
-      main: path.join(__dirname, 'src/main.js')
+      main: path.join(__dirname, 'src/main/index.js')
     },
     target: 'electron',
     node: {
