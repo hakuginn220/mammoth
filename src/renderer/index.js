@@ -1,14 +1,19 @@
 import React from 'react'
-import { render } from 'react-dom'
-import App from './components/app'
+import ReactDOM from 'react-dom'
+import { useStrict } from 'mobx'
+import { Provider } from 'mobx-react'
+import Store from './store'
+import Event from './event'
+import App from './app'
 
-class Container extends React.Component {
-  render () {
-    return <App />
-  }
-}
+useStrict(true)
 
-render(
-  <Container />,
+const store = new Store()
+const event = new Event(store)
+
+ReactDOM.render(
+  <Provider event={event}>
+    <App store={store} />
+  </Provider>,
   document.getElementById('root')
 )

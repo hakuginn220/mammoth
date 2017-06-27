@@ -1,10 +1,11 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 import { injectGlobal } from 'styled-components'
 
 injectGlobal`
   :root {
     --background-primary: #282c37;
-    --text-primary: white;
+    --text-primary: #ffffff;
   }
   ::selection {
     background: var(--text-primary);
@@ -23,8 +24,17 @@ injectGlobal`
   }
 `
 
-export default class App extends React.Component {
+class App extends React.Component {
   render () {
-    return <div>Hello World</div>
+    console.log(this.props)
+    const { event, store } = this.props
+    return (
+      <div>
+        <div>{store.history.pathname}</div>
+        <button onClick={event.onClick('/test/')}>テスト</button>
+      </div>
+    )
   }
 }
+
+export default inject('event')(observer(App))

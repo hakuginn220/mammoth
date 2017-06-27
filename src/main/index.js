@@ -1,5 +1,5 @@
 import { app } from 'electron'
-import { createWindow } from './browser'
+import { createWindow } from './window'
 
 app.on('ready', () => {
   createWindow()
