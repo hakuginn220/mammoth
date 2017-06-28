@@ -3,7 +3,7 @@ export default class RendererEvent {
     this.store = store
   }
 
-  onClick (value) {
-    this.store.push(value)
+  onClick (href) {
+    this.store.push(href)
   }
 }

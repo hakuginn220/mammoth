@@ -1,14 +1,16 @@
 import { action, extendObservable } from 'mobx'
 
-export default class RendererStore {
-  constructor () {
-    extendObservable(this, {
-      history: new window.URL('http://localhost'),
+export const initialState = {
+  history: new window.URL('http://localhost')
+}
 
-      push: action((value) => {
-        console.log('t')
-        this.history = new window.URL('http://localhost' + value)
+export default class RendererStore {
+  constructor (initialState) {
+    const state = Object.assign({}, initialState, {
+      push: action((href) => {
+        this.history = new window.URL('http://localhost' + href)
       })
     })
+    extendObservable(this, state)
   }
 }
