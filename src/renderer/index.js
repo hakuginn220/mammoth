@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import { useStrict } from 'mobx'
 import { Provider } from 'mobx-react'
 import Store from './store'
@@ -11,7 +11,7 @@ useStrict(true)
 const store = new Store()
 const event = new Event(store)
 
-ReactDOM.render(
+render(
   <Provider event={event}>
     <App store={store} />
   </Provider>,

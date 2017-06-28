@@ -31,7 +31,7 @@ class App extends React.Component {
     return (
       <div>
         <div>{store.history.pathname}</div>
-        <button onClick={event.onClick('/test/')}>テスト</button>
+        <button onClick={() => event.onClick(`/${Math.random()}/`)}>テスト</button>
       </div>
     )
   }
