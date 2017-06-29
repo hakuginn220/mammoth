@@ -13,8 +13,8 @@ class Login extends Component {
             <input
               type='text'
               placeholder='mastodon.cloud'
-              value={Store.instance}
-              onChange={e => Event.onChangeLoginInstance(e)}
+              value={Store.hostname}
+              onChange={e => Event.onChangeLoginHostname(e)}
             />
           </div>
           <div>
@@ -33,6 +33,7 @@ class Login extends Component {
             />
           </div>
           <button type='submit'>ログイン</button>
+          <div>{Store.message}</div>
         </form>
         <Link to='/'>戻る</Link>
       </div>
