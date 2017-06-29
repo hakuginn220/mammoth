@@ -6,7 +6,9 @@ class Home extends Component {
   render () {
     return (
       <div>
-        <div>アカウントがありません。<Link to='/login'>ログインしてください</Link></div>
+        <div>ユーザーが登録されていません</div>
+        <div>インスタンスを指定してログイン認証してください</div>
+        <div><Link to='/login'>ユーザーを認証する</Link></div>
       </div>
     )
   }

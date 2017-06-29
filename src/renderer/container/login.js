@@ -3,37 +3,54 @@ import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
 class Login extends Component {
+  handleSubmit (event) {
+    event.preventDefault()
+    this.props.event.onSubmitLogin()
+  }
+
+  handleHostname (event) {
+    this.props.event.onChangeLoginHostname(event)
+  }
+
+  handleUser (event) {
+    this.props.event.onChangeLoginUser(event)
+  }
+
+  handlePassword (event) {
+    this.props.event.onChangeLoginPassword(event)
+  }
+
   render () {
-    const Event = this.props.event
-    const Store = this.props.store.login
+    const { hostname, user, password, message } = this.props.store.login
+
     return (
       <div>
-        <form onSubmit={() => Event.onSubmitLogin()}>
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <div>
             <input
               type='text'
               placeholder='mastodon.cloud'
-              value={Store.hostname}
-              onChange={e => Event.onChangeLoginHostname(e)}
+              value={hostname}
+              onChange={this.handleHostname.bind(this)}
             />
           </div>
           <div>
             <input
               type='text'
               placeholder='test@gmail.com'
-              value={Store.user}
-              onChange={e => Event.onChangeLoginUser(e)}
+              value={user}
+              onChange={this.handleUser.bind(this)}
             />
           </div>
           <div>
             <input
               type='password'
-              value={Store.password}
-              onChange={e => Event.onChangeLoginPassword(e)}
+              value={password}
+              onChange={this.handlePassword.bind(this)}
             />
           </div>
           <button type='submit'>ログイン</button>
-          <div>{Store.message}</div>
+          <div>{message}</div>
         </form>
         <Link to='/'>戻る</Link>
       </div>
