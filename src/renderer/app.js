@@ -1,5 +1,5 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
+import { Route, Switch, Link } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
 import DevTools from 'mobx-react-devtools'
 import Login from './container/login'
@@ -24,17 +24,35 @@ injectGlobal`
   textarea {
     font-family: sans-serif;
   }
+  a {
+    color: var(--text-primary);
+  }
 `
+
+const Home = () => (
+  <div>
+    <div><Link to='/login'>login</Link></div>
+    <div><Link to='/error'>error</Link></div>
+  </div>
+)
+
+const NoMatch = () => (
+  <div>404 Error</div>
+)
 
 class App extends React.Component {
   render () {
     return (
       <div>
-        <Login store={this.props.store} />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/login' component={Login} />
+          <Route component={NoMatch} />
+        </Switch>
         <DevTools />
       </div>
     )
   }
 }
 
-export default inject('event')(observer(App))
+export default App
