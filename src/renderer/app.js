@@ -1,7 +1,9 @@
-import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
 import DevTools from 'mobx-react-devtools'
+
+import Home from './container/home'
 import Login from './container/login'
 
 injectGlobal`
@@ -29,30 +31,17 @@ injectGlobal`
   }
 `
 
-const Home = () => (
-  <div>
-    <div><Link to='/login'>login</Link></div>
-    <div><Link to='/error'>error</Link></div>
-  </div>
-)
-
-const NoMatch = () => (
-  <div>404 Error</div>
-)
-
-class App extends React.Component {
+export default class App extends Component {
   render () {
     return (
       <div>
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
-          <Route component={NoMatch} />
+          <Redirect push to='/' />
         </Switch>
         <DevTools />
       </div>
     )
   }
 }
-
-export default App
