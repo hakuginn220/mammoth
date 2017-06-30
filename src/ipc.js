@@ -1,1 +1,0 @@
-export const ADD_REGISTER_USER = 'ADD_REGISTER_USER'

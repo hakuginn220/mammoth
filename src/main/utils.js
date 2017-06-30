@@ -13,7 +13,7 @@ export function createWindow () {
     minWidth: 320,
     minHeight: 480,
     icon: path.join(__dirname, 'images/icon.ico'),
-    backgroundColor: '#282c37',
+    backgroundColor: '#ffffff',
     darkTheme: true
   })
 

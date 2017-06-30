@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
+import { ipcRenderer } from 'electron'
+
+import * as ipc from '../../share/ipc'
 
 class Home extends Component {
+  componentDidMount () {
+    ipcRenderer.send(ipc.GET_USERS)
+  }
   render () {
     return (
       <div>

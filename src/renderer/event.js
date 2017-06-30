@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 
+import * as ipc from '../share/ipc'
 import * as api from './utils/api'
 
 export default class RendererEvent {
@@ -25,8 +26,7 @@ export default class RendererEvent {
     api.apps({ hostname }).then(apps => {
       api.oauthToken({ hostname, user, password }, apps).then(oauthToken => {
         api.accountsVerifyCredentials({ hostname }, oauthToken).then(account => {
-          const registerUser = { apps, oauthToken, account }
-          ipcRenderer.send('ADD_REGISTER_USER', registerUser)
+          ipcRenderer.send(ipc.ADD_USER, { apps, oauthToken, account })
         }).catch(error => {
           this.store.login.onErrorMessage(error.message)
           throw error

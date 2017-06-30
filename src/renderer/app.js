@@ -1,43 +1,44 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { observer } from 'mobx-react'
 import { injectGlobal } from 'styled-components'
 import { ipcRenderer } from 'electron'
 import DevTools from 'mobx-react-devtools'
 
-import * as ipc from '../ipc'
+import * as ipc from '../share/ipc'
 import Home from './container/home'
 import Login from './container/login'
 
 injectGlobal`
-  :root {
-    --background-primary: #282c37;
-    --text-primary: #ffffff;
-  }
   ::selection {
-    background: var(--text-primary);
-    color: var(--background-primary);
+    background: black;
+    color: white;
   }
-  body {
-    margin: 0;
+  html {
     font-family: sans-serif;
-    background: var(--background-primary);
-    color: var(--text-primary);
+    font-size: 16px;
   }
   input,
   select,
   textarea {
     font-family: sans-serif;
-  }
-  a {
-    color: var(--text-primary);
+    font-size: 16px;
   }
 `
 
-export default class App extends Component {
-  componentWillMount () {
-    ipcRenderer.on(ipc.ADD_REGISTER_USER, (event, account) => {
-      console.log(account)
+class App extends Component {
+  componentDidMount () {
+    ipcRenderer.on(ipc.ADD_USER, () => {
+      console.log(ipc.ADD_USER)
       this.props.history.push('/')
+    })
+    ipcRenderer.on(ipc.REMOVE_USER, () => {
+      console.log(ipc.REMOVE_USER)
+      this.props.history.push('/')
+    })
+    ipcRenderer.on(ipc.GET_USERS, (event, users) => {
+      console.log(ipc.GET_USERS)
+      console.log(users)
     })
   }
 
@@ -54,3 +55,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default observer(App)
