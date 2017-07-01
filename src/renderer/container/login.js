@@ -1,52 +1,41 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { inject, observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 class Login extends Component {
-  handleSubmit (event) {
-    event.preventDefault()
-    this.props.event.onSubmitLogin()
-  }
-
-  handleHostname (event) {
-    this.props.event.onChangeLoginHostname(event)
-  }
-
-  handleUser (event) {
-    this.props.event.onChangeLoginUser(event)
-  }
-
-  handlePassword (event) {
-    this.props.event.onChangeLoginPassword(event)
-  }
-
   render () {
-    const { hostname, user, password, message } = this.props.store.login
-
+    const { hostname, user, password, message } = this.props.loginStore
+    const { onSubmit, onChange } = this.props.loginEvent
     return (
       <div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form onSubmit={e => {
+          e.preventDefault()
+          onSubmit(e)
+        }}>
           <div>
             <input
               type='text'
+              name='hostname'
               placeholder='mastodon.cloud'
               value={hostname}
-              onChange={this.handleHostname.bind(this)}
+              onChange={e => onChange(e)}
             />
           </div>
           <div>
             <input
               type='text'
+              name='user'
               placeholder='test@gmail.com'
               value={user}
-              onChange={this.handleUser.bind(this)}
+              onChange={e => onChange(e)}
             />
           </div>
           <div>
             <input
               type='password'
+              name='password'
               value={password}
-              onChange={this.handlePassword.bind(this)}
+              onChange={e => onChange(e)}
             />
           </div>
           <button type='submit'>ログイン</button>
@@ -58,4 +47,4 @@ class Login extends Component {
   }
 }
 
-export default inject('event', 'store')(observer(Login))
+export default inject('loginStore', 'loginEvent')(observer(Login))

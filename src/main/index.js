@@ -1,13 +1,11 @@
 import { app, ipcMain } from 'electron'
 import { useStrict } from 'mobx'
 
-import * as ipc from '../share/ipc'
-import Store from './store'
+import store from './store'
 import { createWindow } from './utils'
+import * as ipc from '../share/ipc'
 
 useStrict(true)
-
-const store = new Store()
 
 ipcMain.on(ipc.ADD_USER, (event, user) => {
   console.log(ipc.ADD_USER)

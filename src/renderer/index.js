@@ -4,17 +4,15 @@ import { HashRouter, Route } from 'react-router-dom'
 import { useStrict } from 'mobx'
 import { Provider } from 'mobx-react'
 
-import Store from './store'
-import Event from './event'
 import App from './app'
+
+import loginStore from './store/login'
+import loginEvent from './event/login'
 
 useStrict(true)
 
-const store = new Store()
-const event = new Event(store)
-
 render(
-  <Provider event={event} store={store}>
+  <Provider loginEvent={loginEvent} loginStore={loginStore}>
     <HashRouter>
       <Route component={App} />
     </HashRouter>

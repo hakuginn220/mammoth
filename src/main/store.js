@@ -1,17 +1,15 @@
-import { action, extendObservable } from 'mobx'
+import { action, observable } from 'mobx'
 
-export default class MainStore {
-  constructor () {
-    extendObservable(this, {
-      users: [],
+const MainStore = observable({
+  users: [],
 
-      addUser: action(user => {
-        this.users.push(user)
-      }),
+  addUser: action(user => {
+    this.users.push(user)
+  }),
 
-      removeUser: action(userIndex => {
-        this.users.splice(userIndex, 1)
-      })
-    })
-  }
-}
+  removeUser: action(userIndex => {
+    this.users.splice(userIndex, 1)
+  })
+})
+
+export default MainStore

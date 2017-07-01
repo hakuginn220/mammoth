@@ -5,9 +5,9 @@ import { injectGlobal } from 'styled-components'
 import { ipcRenderer } from 'electron'
 import DevTools from 'mobx-react-devtools'
 
-import * as ipc from '../share/ipc'
 import Home from './container/home'
 import Login from './container/login'
+import * as ipc from '../share/ipc'
 
 injectGlobal`
   ::selection {
