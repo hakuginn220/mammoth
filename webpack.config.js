@@ -8,13 +8,14 @@ const option = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js||jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
     ]
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
@@ -25,7 +26,7 @@ const option = {
 module.exports = [
   Object.assign({}, option, {
     entry: {
-      renderer: path.join(__dirname, 'src/renderer/index.js')
+      renderer: path.join(__dirname, 'src/renderer/index.jsx')
     },
     target: 'electron-renderer'
   }),

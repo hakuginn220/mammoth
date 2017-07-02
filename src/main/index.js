@@ -1,28 +1,42 @@
-import { app, ipcMain } from 'electron'
-import { useStrict } from 'mobx'
+import path from 'path'
+import url from 'url'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import { useStrict, autorun } from 'mobx'
+import { OAuth2 } from 'oauth'
 
-import store from './store'
-import { createWindow } from './utils'
 import * as ipc from '../share/ipc'
 
 useStrict(true)
 
-ipcMain.on(ipc.ADD_USER, (event, user) => {
-  console.log(ipc.ADD_USER)
-  store.addUser(user)
-  event.sender.send(ipc.ADD_USER)
+autorun((reaction) => {
+  console.log(reaction.name)
 })
 
-ipcMain.on(ipc.REMOVE_USER, (event, userIndex) => {
-  console.log(ipc.REMOVE_USER)
-  store.removeUser(userIndex)
-  event.sender.send(ipc.REMOVE_USER)
-})
+let current = null
 
-ipcMain.on(ipc.GET_USERS, (event) => {
-  console.log(ipc.GET_USERS)
-  event.sender.send(ipc.GET_USERS, store.users)
-})
+function createWindow () {
+  if (current !== null) return
+
+  current = new BrowserWindow({
+    width: 800,
+    height: 600,
+    minWidth: 320,
+    minHeight: 480,
+    icon: path.join(__dirname, 'images/icon.ico'),
+    backgroundColor: '#ffffff',
+    darkTheme: true
+  })
+
+  current.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  current.on('closed', () => {
+    current = null
+  })
+}
 
 app.on('ready', () => {
   createWindow()
@@ -36,4 +50,26 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   createWindow()
+})
+
+ipcMain.on(ipc.OAUTH_TOKEN, (event, value) => {
+  console.log(ipc.OAUTH_TOKEN, value)
+
+  const { hostname } = value
+
+  const oauth = new OAuth2(
+    'your_client_id',
+    'your_client_secret',
+    `https://${hostname}`,
+    null,
+    '/oauth/token'
+  )
+
+  const url = oauth.getAuthorizeUrl({
+    redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+    response_type: 'code',
+    scope: 'read write follow'
+  })
+
+  shell.openExternal(url)
 })
