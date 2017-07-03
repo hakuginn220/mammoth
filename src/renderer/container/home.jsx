@@ -6,8 +6,8 @@ export default class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
-        <div>No Accounts</div>
-        <div><Link to='/authorization'>Authorization</Link></div>
+        <h2>No Accounts</h2>
+        <p><Link to='/authorization'>Authorization</Link></p>
       </div>
     )
   }

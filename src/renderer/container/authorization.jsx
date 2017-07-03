@@ -14,6 +14,12 @@ export default class Authorization extends Component {
     }
   }
 
+  componentWillMount () {
+    ipcRenderer.on(ipc.AUTHORIZATION, (event) => {
+      this.props.history.push('/authorization/code')
+    })
+  }
+
   bundleSubmit (event) {
     event.preventDefault()
     this.setState({ message: '' })
@@ -33,8 +39,7 @@ export default class Authorization extends Component {
     })
     .then(response => response.json())
     .then(apps => {
-      ipcRenderer.send(ipc.OAUTH_TOKEN, { hostname, apps })
-      this.props.history.push('/authorization/pin')
+      ipcRenderer.send(ipc.AUTHORIZATION, { hostname, apps })
     })
     .catch(error => {
       this.setState({ message: error.message })
@@ -45,9 +50,7 @@ export default class Authorization extends Component {
     return (
       <form onSubmit={(e) => this.bundleSubmit(e)}>
         <h1>Authorization</h1>
-        <div>
-          <label htmlFor='hostname'>Instance</label>
-        </div>
+        <h2>Instance Select</h2>
         <div>
           <input
             type='text'
@@ -56,12 +59,10 @@ export default class Authorization extends Component {
             value={this.state.hostname}
             onChange={e => this.setState({ hostname: e.target.value })}
           />
-        </div>
-        <div>
           <button type='submit'>Login</button>
         </div>
-        <div>{this.state.message}</div>
-        <Link to='/'>Back Home</Link>
+        <p>{this.state.message}</p>
+        <p><Link to='/'>Back Home</Link></p>
       </form>
     )
   }

@@ -4,7 +4,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
 
 import Authorization from './container/authorization'
-import AuthorizationPin from './container/authorization-pin'
+import AuthorizationCode from './container/authorization-code'
 import Home from './container/home'
 
 injectGlobal`
@@ -28,7 +28,7 @@ render(
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/authorization' component={Authorization} />
-      <Route exact path='/authorization/pin' component={AuthorizationPin} />
+      <Route exact path='/authorization/code' component={AuthorizationCode} />
     </Switch>
   </HashRouter>,
   document.getElementById('root')

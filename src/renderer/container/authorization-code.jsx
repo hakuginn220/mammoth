@@ -1,0 +1,57 @@
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { ipcRenderer } from 'electron'
+
+import * as ipc from '../../common/ipc'
+
+export default class AuthorizationCode extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      code: '',
+      message: ''
+    }
+  }
+
+  componentWillMount () {
+    ipcRenderer.on(ipc.AUTHORIZATION_CODE, (event, error) => {
+      if (error) {
+        const { error_description } = JSON.parse(error.data)
+        this.setState({ message: error_description })
+      } else {
+        this.props.history.push('/')
+      }
+    })
+  }
+
+  bundleSubmit (event) {
+    event.preventDefault()
+
+    this.setState({ message: '' })
+
+    const { code } = this.state
+
+    ipcRenderer.send(ipc.AUTHORIZATION_CODE, { code })
+  }
+
+  render () {
+    return (
+      <form onSubmit={(e) => this.bundleSubmit(e)}>
+        <h1>Authorization</h1>
+        <h2>Pin Code</h2>
+        <div>
+          <input
+            type='password'
+            name='code'
+            value={this.state.code}
+            onChange={e => this.setState({ code: e.target.value })}
+          />
+          <button type='submit'>Register</button>
+        </div>
+        <p>{this.state.message}</p>
+        <p><Link to='/authorization'>Back Instance</Link></p>
+      </form>
+    )
+  }
+}

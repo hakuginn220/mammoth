@@ -18,14 +18,18 @@ app.on('activate', () => {
   createWindow()
 })
 
-ipcMain.on(ipc.OAUTH_TOKEN, (event, value) => {
-  console.log(ipc.OAUTH_TOKEN, value)
+let store = {}
+let oauth
+
+ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
+  console.log(ipc.AUTHORIZATION, value)
 
   const { hostname, apps } = value
+  const { client_id, client_secret } = apps
 
-  const oauth = new OAuth2(
-    apps.client_id,
-    apps.client_secret,
+  oauth = new OAuth2(
+    client_id,
+    client_secret,
     `https://${hostname}`,
     null,
     '/oauth/token'
@@ -38,4 +42,29 @@ ipcMain.on(ipc.OAUTH_TOKEN, (event, value) => {
   })
 
   shell.openExternal(url)
+
+  store.hostname = hostname
+  store.apps = apps
+
+  event.sender.send(ipc.AUTHORIZATION)
+})
+
+ipcMain.on(ipc.AUTHORIZATION_CODE, (event, value) => {
+  console.log(ipc.AUTHORIZATION_CODE, value)
+
+  const { code } = value
+
+  oauth.getOAuthAccessToken(code, {
+    grant_type: 'authorization_code',
+    redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
+  }, (error, accessToken) => {
+    if (error) {
+      console.log(error)
+      event.sender.send(ipc.AUTHORIZATION_CODE, error)
+    } else {
+      store.accessToken = accessToken
+      console.log(store)
+      event.sender.send(ipc.AUTHORIZATION_CODE)
+    }
+  })
 })
