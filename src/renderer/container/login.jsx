@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { ipcRenderer } from 'electron'
 
-import * as ipc from '../../share/ipc'
+import * as ipc from '../../common/ipc'
 
 export default class Login extends Component {
   constructor (props) {
@@ -10,43 +10,69 @@ export default class Login extends Component {
 
     this.state = {
       hostname: '',
-      code: ''
+      message: '',
+      authorization: ''
     }
   }
 
-  componentWillMount () {
-    ipcRenderer.on(ipc.OAUTH_TOKEN, (event, value) => {
-      console.log(ipc.OAUTH_TOKEN, value)
-      this.props.history.push('/')
+  bundleInstance (event) {
+    event.preventDefault()
+    const { hostname } = this.state
+    const { fetch, FormData } = window
+
+    const body = new FormData()
+    body.append('client_name', document.title)
+    body.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob')
+    body.append('scopes', 'read write follow')
+
+    fetch(`https://${hostname}/api/v1/apps`, {
+      method: 'POST',
+      body: body,
+      mode: 'cors'
+    }).then(response => {
+      return response.json()
+    }).then(apps => {
+      ipcRenderer.send(ipc.OAUTH_TOKEN, { hostname, apps })
+    }).catch(error => {
+      this.setState({ message: error.message })
     })
   }
 
-  componentDidUnmount () {
-    ipcRenderer.removeListener(ipc.OAUTH_TOKEN)
-  }
-
-  bundleSubmit (event) {
+  bundleAuthorization (event) {
     event.preventDefault()
-    const { hostname } = this.state
-    ipcRenderer.send(ipc.OAUTH_TOKEN, { hostname })
   }
 
   render () {
     return (
       <div>
-        <form onSubmit={this.bundleSubmit.bind(this)}>
-          <label>インスタンス
-            <input
-              type='text'
-              name='hostname'
-              placeholder='mastodon.cloud'
-              value={this.state.hostname}
-              onChange={e => this.setState({ hostname: e.target.value })}
-            />
-          </label>
-          <button type='submit'>ログイン</button>
+        <form onSubmit={(e) => this.bundleInstance(e)}>
+          <div>
+            <label>Instance
+              <input
+                type='text'
+                name='hostname'
+                placeholder='mastodon.cloud'
+                value={this.state.hostname}
+                onChange={e => this.setState({ hostname: e.target.value })}
+              />
+            </label>
+          </div>
+          <button type='submit'>Login</button>
         </form>
-        <Link to='/'>戻る</Link>
+        <form onSubmit={(e) => this.bundleAuthorization(e)}>
+          <div>
+            <label>Authorization code
+              <input
+                type='password'
+                name='authorization'
+                value={this.state.authorization}
+                onChange={e => this.setState({ authorization: e.target.value })}
+              />
+            </label>
+          </div>
+          <button type='submit'>Register</button>
+        </form>
+        <Link to='/'>Back</Link>
       </div>
     )
   }
