@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
 
+import Authorization from './container/authorization'
+import AuthorizationPin from './container/authorization-pin'
 import Home from './container/home'
-import Login from './container/login'
 
 injectGlobal`
   ::selection {
@@ -22,22 +23,13 @@ injectGlobal`
   }
 `
 
-class App extends Component {
-  render () {
-    return (
-      <HashRouter>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/login' component={Login} />
-        </Switch>
-      </HashRouter>
-    )
-  }
-}
-
 render(
   <HashRouter>
-    <Route component={App} />
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/authorization' component={Authorization} />
+      <Route exact path='/authorization/pin' component={AuthorizationPin} />
+    </Switch>
   </HashRouter>,
   document.getElementById('root')
 )
