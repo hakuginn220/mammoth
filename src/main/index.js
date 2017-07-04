@@ -1,8 +1,15 @@
+import path from 'path'
 import { app, ipcMain, shell } from 'electron'
+import fs from 'fs-extra'
 import { OAuth2 } from 'oauth'
 
 import { createWindow } from './utils/window'
 import * as ipc from '../common/ipc'
+
+const json = path.join(app.getPath('userData'), 'store.json')
+let store = fs.readJsonSync(json, { throws: false })
+if (store === null) store = {}
+let oauth
 
 app.on('ready', () => {
   createWindow()
@@ -17,9 +24,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   createWindow()
 })
-
-let store = {}
-let oauth
 
 ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
   console.log(ipc.AUTHORIZATION, value)
@@ -64,6 +68,11 @@ ipcMain.on(ipc.AUTHORIZATION_CODE, (event, value) => {
     } else {
       store.accessToken = accessToken
       console.log(store)
+      try {
+        fs.writeJsonSync(json, store)
+      } catch (e) {
+        console.log(e)
+      }
       event.sender.send(ipc.AUTHORIZATION_CODE)
     }
   })
