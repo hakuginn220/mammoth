@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { ipcRenderer } from 'electron'
 
+import Loading from '../component/loading'
 import * as ipc from '../../common/ipc'
 
 export default class Authorization extends Component {
@@ -10,7 +11,8 @@ export default class Authorization extends Component {
 
     this.state = {
       hostname: '',
-      message: ''
+      message: '',
+      wait: false
     }
   }
 
@@ -22,7 +24,11 @@ export default class Authorization extends Component {
 
   bundleSubmit (event) {
     event.preventDefault()
-    this.setState({ message: '' })
+
+    this.setState({
+      message: '',
+      wait: true
+    })
 
     const { hostname } = this.state
     const { fetch, FormData } = window
@@ -42,28 +48,35 @@ export default class Authorization extends Component {
       ipcRenderer.send(ipc.AUTHORIZATION, { hostname, apps })
     })
     .catch(error => {
-      this.setState({ message: error.message })
+      this.setState({
+        message: error.message,
+        wait: false
+      })
     })
   }
 
   render () {
-    return (
-      <form onSubmit={(e) => this.bundleSubmit(e)}>
-        <h1>Authorization</h1>
-        <h2>Instance Select</h2>
-        <div>
-          <input
-            type='text'
-            name='hostname'
-            placeholder='mastodon.cloud'
-            value={this.state.hostname}
-            onChange={e => this.setState({ hostname: e.target.value })}
-          />
-          <button type='submit'>Login</button>
-        </div>
-        <p>{this.state.message}</p>
-        <p><Link to='/'>Back Home</Link></p>
-      </form>
-    )
+    if (this.state.wait) {
+      return <Loading />
+    } else {
+      return (
+        <form onSubmit={(e) => this.bundleSubmit(e)}>
+          <h1>Authorization</h1>
+          <h2>Instance Select</h2>
+          <div>
+            <input
+              type='text'
+              name='hostname'
+              placeholder='mastodon.cloud'
+              value={this.state.hostname}
+              onChange={e => this.setState({ hostname: e.target.value })}
+            />
+            <button type='submit'>Login</button>
+          </div>
+          <p>{this.state.message}</p>
+          <p><Link to='/'>Back Home</Link></p>
+        </form>
+      )
+    }
   }
 }

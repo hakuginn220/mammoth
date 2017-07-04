@@ -68,3 +68,8 @@ ipcMain.on(ipc.AUTHORIZATION_CODE, (event, value) => {
     }
   })
 })
+
+ipcMain.on(ipc.HOME, (event) => {
+  console.log(ipc.HOME)
+  event.sender.send(ipc.HOME, { store })
+})

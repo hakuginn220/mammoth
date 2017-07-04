@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { ipcRenderer } from 'electron'
 
+import Loading from '../component/loading'
 import * as ipc from '../../common/ipc'
 
 export default class AuthorizationCode extends Component {
@@ -10,7 +11,8 @@ export default class AuthorizationCode extends Component {
 
     this.state = {
       code: '',
-      message: ''
+      message: '',
+      wait: false
     }
   }
 
@@ -18,7 +20,10 @@ export default class AuthorizationCode extends Component {
     ipcRenderer.on(ipc.AUTHORIZATION_CODE, (event, error) => {
       if (error) {
         const { error_description } = JSON.parse(error.data)
-        this.setState({ message: error_description })
+        this.setState({
+          message: error_description,
+          wait: false
+        })
       } else {
         this.props.history.push('/')
       }
@@ -28,7 +33,10 @@ export default class AuthorizationCode extends Component {
   bundleSubmit (event) {
     event.preventDefault()
 
-    this.setState({ message: '' })
+    this.setState({
+      message: '',
+      wait: true
+    })
 
     const { code } = this.state
 
@@ -36,22 +44,26 @@ export default class AuthorizationCode extends Component {
   }
 
   render () {
-    return (
-      <form onSubmit={(e) => this.bundleSubmit(e)}>
-        <h1>Authorization</h1>
-        <h2>Pin Code</h2>
-        <div>
-          <input
-            type='password'
-            name='code'
-            value={this.state.code}
-            onChange={e => this.setState({ code: e.target.value })}
-          />
-          <button type='submit'>Register</button>
-        </div>
-        <p>{this.state.message}</p>
-        <p><Link to='/authorization'>Back Instance</Link></p>
-      </form>
-    )
+    if (this.state.wait) {
+      return <Loading />
+    } else {
+      return (
+        <form onSubmit={(e) => this.bundleSubmit(e)}>
+          <h1>Authorization</h1>
+          <h2>Pin Code</h2>
+          <div>
+            <input
+              type='password'
+              name='code'
+              value={this.state.code}
+              onChange={e => this.setState({ code: e.target.value })}
+            />
+            <button type='submit'>Register</button>
+          </div>
+          <p>{this.state.message}</p>
+          <p><Link to='/authorization'>Back Instance</Link></p>
+        </form>
+      )
+    }
   }
 }

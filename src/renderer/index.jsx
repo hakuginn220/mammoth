@@ -9,17 +9,20 @@ import Home from './container/home'
 
 injectGlobal`
   ::selection {
-    background: rgba(255, 255, 125, 0.99);
+    background: rgba(0, 0, 0, 0.2);
   }
   html {
     font-family: sans-serif;
     font-size: 16px;
+    color: #333333;
   }
   input,
   select,
-  textarea {
+  textarea,
+  button {
     font-family: inherit;
-    font-size: 1rem;
+    font-size: inherit;
+    color: inherit;
   }
 `
 

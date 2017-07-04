@@ -1,2 +1,3 @@
 export const AUTHORIZATION = 'AUTHORIZATION'
 export const AUTHORIZATION_CODE = 'AUTHORIZATION_CODE'
+export const HOME = 'HOME'
