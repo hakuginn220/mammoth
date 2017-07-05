@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "fs-extra": "^3.0.1",
+    "mobx": "^3.1.16",
     "oauth": "^0.9.15",
     "preact": "^8.1.0",
     "preact-compat": "^3.16.0",
