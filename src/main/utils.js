@@ -2,12 +2,10 @@ import path from 'path'
 import url from 'url'
 import { BrowserWindow } from 'electron'
 
-let current = null
+export function createWindow (win) {
+  if (win !== null) return
 
-export function createWindow () {
-  if (current !== null) return
-
-  current = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     minWidth: 320,
@@ -17,13 +15,13 @@ export function createWindow () {
     darkTheme: true
   })
 
-  current.loadURL(url.format({
+  win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
 
-  current.on('closed', () => {
-    current = null
+  win.on('closed', () => {
+    win = null
   })
 }

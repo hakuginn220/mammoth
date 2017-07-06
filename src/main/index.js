@@ -4,7 +4,7 @@ import fs from 'fs-extra'
 import { OAuth2 } from 'oauth'
 
 import Store from './store'
-import { createWindow } from './utils/window'
+import * as utils from './utils'
 import * as ipc from '../common/ipc'
 
 const test = new Store()
@@ -20,8 +20,10 @@ let store = fs.readJsonSync(json, { throws: false })
 if (store === null) store = {}
 let oauth
 
+let win = null
+
 app.on('ready', () => {
-  createWindow()
+  utils.createWindow(win)
 })
 
 app.on('window-all-closed', () => {
@@ -31,7 +33,7 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  createWindow()
+  utils.createWindow(win)
 })
 
 ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
