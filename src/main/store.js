@@ -1,51 +1,41 @@
 import path from 'path'
+import fs from 'fs-extra'
 import { app } from 'electron'
-import { action, extendObservable } from 'mobx'
 
 export default class MainStore {
   constructor () {
     this._path = app.getPath('userData')
-    this._pathAccount = path.join(this._path, 'accounts.json')
+    this._pathAccounts = path.join(this._path, 'accounts.json')
     this._pathApps = path.join(this._path, 'apps.json')
 
-    extendObservable(this, {
-      accounts: {},
-      apps: {},
+    let _accounts = fs.readJsonSync(this._pathAccounts, { throws: false })
+    if (_accounts === null) _accounts = {}
+    this.accounts = _accounts
 
-      addAccount: action((key, value) => {
-        this.accounts[key] = value
-      }),
+    let _apps = fs.readJsonSync(this._pathApps, { throws: false })
+    if (_apps === null) _apps = {}
+    this.apps = _apps
+  }
 
-      addApps: action((key, value) => {
-        this.apps[key] = value
-      }),
+  addAccounts (key, value) {
+    this.accounts[key] = value
+  }
 
-      get getAccount () {
-        if (this.accounts[this._hostname]) {
-          return this.accounts[this._hostname]
-        } else {
-          return null
-        }
-      },
-      set getAccount (value) {
-        this._hostname = value
-      },
-
-      get getApps () {
-        if (this.apps[this._hostname]) {
-          return this.apps[this._hostname]
-        } else {
-          return null
-        }
-      },
-      set getApps (value) {
-        this._hostname = value
-      }
-    })
+  addApps (key, value) {
+    this.apps[key] = value
   }
 
   save () {
-    console.log(this.accounts)
-    console.log(this.apps)
+    fs.writeJsonSync(this._pathAccounts, this.accounts)
+    fs.writeJsonSync(this._pathApps, this.apps)
+    console.log('store@save', this)
+  }
+
+  clear () {
+    this.accounts = {}
+    this.apps = {}
+    fs.removeSync(this._pathAccounts)
+    fs.removeSync(this._pathApps)
+    console.log('store@save', this)
   }
 }

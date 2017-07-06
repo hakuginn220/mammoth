@@ -9,10 +9,7 @@ import * as ipc from '../common/ipc'
 
 const test = new Store()
 
-test.addAccount('test.com', 'value1')
-test.addAccount('test2.jp', 'value2')
-test.addAccount('test3.io', 'value3')
-test.addApps('test.io', 'value3')
+test.addAccounts('mstdn.jp', { test: 'test' })
 test.save()
 
 const json = path.join(app.getPath('userData'), 'store.json')
