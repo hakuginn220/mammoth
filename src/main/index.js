@@ -9,7 +9,6 @@ import * as ipc from '../common/ipc'
 
 const test = new Store()
 
-test.addAccounts('mstdn.jp', { test: 'test' })
 test.save()
 
 const json = path.join(app.getPath('userData'), 'store.json')
@@ -17,10 +16,10 @@ let store = fs.readJsonSync(json, { throws: false })
 if (store === null) store = {}
 let oauth
 
-let win = null
+let browser = null
 
 app.on('ready', () => {
-  utils.createWindow(win)
+  utils.createWindow(browser)
 })
 
 app.on('window-all-closed', () => {
@@ -30,7 +29,7 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  utils.createWindow(win)
+  utils.createWindow(browser)
 })
 
 ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
@@ -76,11 +75,7 @@ ipcMain.on(ipc.AUTHORIZATION_CODE, (event, value) => {
     } else {
       store.accessToken = accessToken
       console.log(store)
-      try {
-        fs.writeJsonSync(json, store)
-      } catch (e) {
-        console.log(e)
-      }
+      fs.writeJsonSync(json, store)
       event.sender.send(ipc.AUTHORIZATION_CODE)
     }
   })

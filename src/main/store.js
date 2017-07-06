@@ -9,33 +9,35 @@ export default class MainStore {
     this._pathApps = path.join(this._path, 'apps.json')
 
     let _accounts = fs.readJsonSync(this._pathAccounts, { throws: false })
-    if (_accounts === null) _accounts = {}
+    if (_accounts === null) _accounts = []
     this.accounts = _accounts
 
     let _apps = fs.readJsonSync(this._pathApps, { throws: false })
-    if (_apps === null) _apps = {}
+    if (_apps === null) _apps = []
     this.apps = _apps
   }
 
-  addAccounts (key, value) {
-    this.accounts[key] = value
+  addAccounts (value) {
+    this.accounts.push(value)
   }
 
-  addApps (key, value) {
-    this.apps[key] = value
+  addApps (value) {
+    this.apps.push(value)
   }
 
   save () {
     fs.writeJsonSync(this._pathAccounts, this.accounts)
     fs.writeJsonSync(this._pathApps, this.apps)
-    console.log('store@save', this)
+    console.log('store@accounts')
+    console.log(this.accounts)
+    console.log('store@apps')
+    console.log(this.apps)
   }
 
   clear () {
-    this.accounts = {}
-    this.apps = {}
+    this.accounts = []
+    this.apps = []
     fs.removeSync(this._pathAccounts)
     fs.removeSync(this._pathApps)
-    console.log('store@save', this)
   }
 }
