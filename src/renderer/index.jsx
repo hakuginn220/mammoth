@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
@@ -6,6 +6,9 @@ import { injectGlobal } from 'styled-components'
 import Authorization from './container/authorization'
 import AuthorizationCode from './container/authorization-code'
 import Home from './container/home'
+
+import { ipcRenderer } from 'electron'
+import * as action from '../action'
 
 injectGlobal`
   ::selection {
@@ -26,13 +29,27 @@ injectGlobal`
   }
 `
 
+class Container extends Component {
+  componentWillMount () {
+    ipcRenderer.on(action.HOME_INIT, (event, value) => {
+      console.log(value)
+    })
+  }
+
+  render () {
+    return (
+      <HashRouter>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/authorization' component={Authorization} />
+          <Route exact path='/authorization/code' component={AuthorizationCode} />
+        </Switch>
+      </HashRouter>
+    )
+  }
+}
+
 render(
-  <HashRouter>
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/authorization' component={Authorization} />
-      <Route exact path='/authorization/code' component={AuthorizationCode} />
-    </Switch>
-  </HashRouter>,
+  <Container />,
   document.getElementById('root')
 )

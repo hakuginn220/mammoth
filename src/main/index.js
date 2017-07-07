@@ -6,6 +6,7 @@ import { OAuth2 } from 'oauth'
 import Store from './store'
 import * as utils from './utils'
 import * as ipc from '../common/ipc'
+import * as action from '../action'
 
 const test = new Store()
 
@@ -34,6 +35,14 @@ app.on('activate', () => {
 
 ipcMain.on('dispatch', (event, value) => {
   console.log(value)
+
+  switch (value.type) {
+    case action.HOME_INIT:
+      event.sender.send(value.type, test.apps)
+      break
+    default:
+      break
+  }
 })
 
 ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
