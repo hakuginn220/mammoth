@@ -7,9 +7,6 @@ import Authorization from './container/authorization'
 import AuthorizationCode from './container/authorization-code'
 import Home from './container/home'
 
-import { ipcRenderer } from 'electron'
-import * as action from '../action'
-
 injectGlobal`
   ::selection {
     background: rgba(0, 0, 0, 0.2);
@@ -29,13 +26,7 @@ injectGlobal`
   }
 `
 
-class Container extends Component {
-  componentWillMount () {
-    ipcRenderer.on(action.HOME_INIT, (event, value) => {
-      console.log(value)
-    })
-  }
-
+class App extends Component {
   render () {
     return (
       <HashRouter>
@@ -50,6 +41,6 @@ class Container extends Component {
 }
 
 render(
-  <Container />,
+  <App />,
   document.getElementById('root')
 )

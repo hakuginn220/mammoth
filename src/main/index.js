@@ -1,26 +1,17 @@
-import path from 'path'
 import { app, ipcMain, shell } from 'electron'
-import fs from 'fs-extra'
 import { OAuth2 } from 'oauth'
 
 import Store from './store'
+import Event from './event'
 import * as utils from './utils'
 import * as ipc from '../common/ipc'
 import * as action from '../action'
 
-const test = new Store()
-
-test.save()
-
-const json = path.join(app.getPath('userData'), 'store.json')
-let store = fs.readJsonSync(json, { throws: false })
-if (store === null) store = {}
-let oauth
-
-let browser = null
+const store = new Store()
+const event = new Event(store)
 
 app.on('ready', () => {
-  utils.createWindow(browser)
+  utils.createWindow()
 })
 
 app.on('window-all-closed', () => {
@@ -30,20 +21,28 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  utils.createWindow(browser)
+  utils.createWindow()
 })
 
-ipcMain.on('dispatch', (event, value) => {
+ipcMain.on('dispatch', (e, value) => {
   console.log(value)
 
   switch (value.type) {
     case action.HOME_INIT:
-      event.sender.send(value.type, test.apps)
+      event.homeInit(e, value)
       break
+
+    case action.AUTHORIZATION_INIT:
+      event.authorizationInit(e, value)
+      break
+
     default:
       break
   }
 })
+
+const testStore = {}
+let oauth
 
 ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
   console.log(ipc.AUTHORIZATION, value)
@@ -67,8 +66,8 @@ ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
 
   shell.openExternal(url)
 
-  store.hostname = hostname
-  store.apps = apps
+  testStore.hostname = hostname
+  testStore.apps = apps
 
   event.sender.send(ipc.AUTHORIZATION)
 })
@@ -86,15 +85,9 @@ ipcMain.on(ipc.AUTHORIZATION_CODE, (event, value) => {
       console.log(error)
       event.sender.send(ipc.AUTHORIZATION_CODE, error)
     } else {
-      store.accessToken = accessToken
-      console.log(store)
-      fs.writeJsonSync(json, store)
+      testStore.accessToken = accessToken
+      console.log(testStore)
       event.sender.send(ipc.AUTHORIZATION_CODE)
     }
   })
-})
-
-ipcMain.on(ipc.HOME, (event) => {
-  console.log(ipc.HOME)
-  event.sender.send(ipc.HOME, { store })
 })

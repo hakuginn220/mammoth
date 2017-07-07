@@ -5,6 +5,9 @@ import { ipcRenderer } from 'electron'
 import Loading from '../component/loading'
 import * as ipc from '../../common/ipc'
 
+import dispatch from '../dispatcher'
+import * as action from '../../action'
+
 export default class Authorization extends Component {
   constructor (props) {
     super(props)
@@ -20,6 +23,10 @@ export default class Authorization extends Component {
     ipcRenderer.on(ipc.AUTHORIZATION, (event) => {
       this.props.history.push('/authorization/code')
     })
+  }
+
+  componentDidMount () {
+    dispatch(action.AUTHORIZATION_INIT, {})
   }
 
   bundleSubmit (event) {

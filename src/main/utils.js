@@ -2,7 +2,9 @@ import path from 'path'
 import url from 'url'
 import { BrowserWindow } from 'electron'
 
-export function createWindow (browser) {
+let browser = null
+
+export function createWindow () {
   if (browser !== null) return
 
   browser = new BrowserWindow({

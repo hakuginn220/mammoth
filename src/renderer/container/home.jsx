@@ -32,9 +32,7 @@ export default class Home extends Component {
   }
 
   componentDidMount () {
-    this.setState({ wait: true })
     dispatch(action.HOME_INIT, {})
-    ipcRenderer.send(ipc.HOME)
   }
 
   render () {
