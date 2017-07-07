@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import dispatch from '../dispatcher'
-import * as action from '../../action'
-
 export default class Home extends Component {
-  componentDidMount () {
-    dispatch(action.SYNC_STORE, {})
-  }
-
   render () {
     return (
       <div>

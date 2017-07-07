@@ -25,10 +25,6 @@ export default class Register extends Component {
     })
   }
 
-  componentDidMount () {
-    dispatch(action.SYNC_STORE, {})
-  }
-
   bundleSubmit (e) {
     e.preventDefault()
 

@@ -5,9 +5,6 @@ import { ipcRenderer } from 'electron'
 import Loading from '../component/loading'
 import * as ipc from '../../common/ipc'
 
-import dispatch from '../dispatcher'
-import * as action from '../../action'
-
 export default class RegisterCode extends Component {
   constructor (props) {
     super(props)
@@ -31,10 +28,6 @@ export default class RegisterCode extends Component {
         this.props.history.push('/')
       }
     })
-  }
-
-  componentDidMount () {
-    dispatch(action.SYNC_STORE, {})
   }
 
   bundleSubmit (event) {

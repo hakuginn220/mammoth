@@ -4,6 +4,9 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
 import { ipcRenderer } from 'electron'
 
+import dispatch from './dispatcher'
+import * as action from '../action'
+
 import Home from './container/home'
 import Register from './container/register'
 import RegisterCode from './container/register-code'
@@ -42,15 +45,23 @@ class App extends Component {
       console.log(value)
       this.setState(value.payload)
     })
+
+    dispatch(action.SYNC_STORE, {})
   }
 
   render () {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/register/code' component={RegisterCode} />
+          <Route exact path='/' render={
+            props => <Home {...props} {...this.state} />
+          } />
+          <Route exact path='/register' render={
+            props => <Register {...props} {...this.state} />
+          } />
+          <Route exact path='/register/code' render={
+            props => <RegisterCode {...props} {...this.state} />
+          } />
         </Switch>
       </HashRouter>
     )
