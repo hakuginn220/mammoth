@@ -28,9 +28,19 @@ injectGlobal`
 `
 
 class App extends Component {
-  componentWillMount () {
-    ipcRenderer.on('callback', (e, value) => {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      accounts: [],
+      apps: []
+    }
+  }
+
+  componentDidMount () {
+    ipcRenderer.on('dispatch', (e, value) => {
       console.log(value)
+      this.setState(value.payload)
     })
   }
 

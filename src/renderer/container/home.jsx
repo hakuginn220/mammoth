@@ -6,7 +6,7 @@ import * as action from '../../action'
 
 export default class Home extends Component {
   componentDidMount () {
-    dispatch(action.HOME_INIT, {})
+    dispatch(action.SYNC_STORE, {})
   }
 
   render () {

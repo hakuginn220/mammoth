@@ -2,13 +2,29 @@ import { app, ipcMain, shell } from 'electron'
 import { OAuth2 } from 'oauth'
 
 import Store from './store'
-import Event from './event'
 import * as utils from './utils'
 import * as ipc from '../common/ipc'
 import * as action from '../action'
 
 const store = new Store()
-const event = new Event(store)
+
+ipcMain.on('dispatch', (e, value) => {
+  console.log(value)
+
+  switch (value.type) {
+    case action.SYNC_STORE:
+      e.sender.send('dispatch', { type: value.type, payload: store.sync() })
+      break
+
+    case action.ADD_APPS:
+      store.addApps(value.payload)
+      e.sender.send('dispatch', { type: value.type, payload: store.sync() })
+      break
+
+    default:
+      break
+  }
+})
 
 app.on('ready', () => {
   utils.createWindow()
@@ -22,31 +38,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   utils.createWindow()
-})
-
-ipcMain.on('dispatch', (e, value) => {
-  console.log(value)
-
-  switch (value.type) {
-    case action.HOME_INIT:
-      event.homeInit(e, value)
-      break
-
-    case action.REGISTER_INIT:
-      event.registerInit(e, value)
-      break
-
-    case action.REGISTER_SUBMIT:
-      event.registerSubmit(e, value)
-      break
-
-    case action.REGISTER_CODE_INIT:
-      event.registerCodeInit(e, value)
-      break
-
-    default:
-      break
-  }
 })
 
 const testStore = {}

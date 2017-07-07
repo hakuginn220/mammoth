@@ -19,19 +19,12 @@ export default class MainStore {
 
   addAccounts (value) {
     this.accounts.push(value)
+    this.save()
   }
 
   addApps (value) {
     this.apps.push(value)
-  }
-
-  save () {
-    fs.writeJsonSync(this._pathAccounts, this.accounts)
-    fs.writeJsonSync(this._pathApps, this.apps)
-    console.log('store@accounts')
-    console.log(this.accounts)
-    console.log('store@apps')
-    console.log(this.apps)
+    this.save()
   }
 
   clear () {
@@ -39,5 +32,19 @@ export default class MainStore {
     this.apps = []
     fs.removeSync(this._pathAccounts)
     fs.removeSync(this._pathApps)
+    this.save()
+  }
+
+  save () {
+    fs.writeJsonSync(this._pathAccounts, this.accounts)
+    fs.writeJsonSync(this._pathApps, this.apps)
+  }
+
+  sync () {
+    const { accounts, apps } = this
+    return {
+      accounts,
+      apps
+    }
   }
 }

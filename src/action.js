@@ -1,4 +1,2 @@
-export const HOME_INIT = 'HOME_INIT'
-export const REGISTER_INIT = 'REGISTER_INIT'
-export const REGISTER_SUBMIT = 'REGISTER_SUBMIT'
-export const REGISTER_CODE_INIT = 'REGISTER_INIT'
+export const SYNC_STORE = 'SYNC_STORE'
+export const ADD_APPS = 'ADD_APPS'

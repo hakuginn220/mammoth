@@ -26,7 +26,7 @@ export default class Register extends Component {
   }
 
   componentDidMount () {
-    dispatch(action.REGISTER_INIT, {})
+    dispatch(action.SYNC_STORE, {})
   }
 
   bundleSubmit (e) {
@@ -38,9 +38,6 @@ export default class Register extends Component {
     })
 
     const { hostname } = this.state
-
-    dispatch(action.REGISTER_SUBMIT, { hostname })
-
     const { fetch, FormData } = window
 
     const body = new FormData()
@@ -55,6 +52,7 @@ export default class Register extends Component {
     })
     .then(response => response.json())
     .then(apps => {
+      dispatch(action.ADD_APPS, { hostname, apps })
       ipcRenderer.send(ipc.AUTHORIZATION, { hostname, apps })
     })
     .catch(error => {

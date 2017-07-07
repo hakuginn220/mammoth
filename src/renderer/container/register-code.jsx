@@ -34,7 +34,7 @@ export default class RegisterCode extends Component {
   }
 
   componentDidMount () {
-    dispatch(action.REGISTER_CODE_INIT, {})
+    dispatch(action.SYNC_STORE, {})
   }
 
   bundleSubmit (event) {
