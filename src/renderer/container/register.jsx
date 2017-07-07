@@ -21,7 +21,7 @@ export default class Register extends Component {
 
   componentWillMount () {
     ipcRenderer.on(ipc.AUTHORIZATION, (event) => {
-      this.props.history.push('/authorization/code')
+      this.props.history.push('/register/code')
     })
   }
 
