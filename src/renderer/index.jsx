@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
+import { ipcRenderer } from 'electron'
 
-import Authorization from './container/authorization'
-import AuthorizationCode from './container/authorization-code'
 import Home from './container/home'
+import Register from './container/register'
+import RegisterCode from './container/register-code'
 
 injectGlobal`
   ::selection {
@@ -27,13 +28,19 @@ injectGlobal`
 `
 
 class App extends Component {
+  componentWillMount () {
+    ipcRenderer.on('callback', (e, value) => {
+      console.log(value)
+    })
+  }
+
   render () {
     return (
       <HashRouter>
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route exact path='/authorization' component={Authorization} />
-          <Route exact path='/authorization/code' component={AuthorizationCode} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/register/code' component={RegisterCode} />
         </Switch>
       </HashRouter>
     )

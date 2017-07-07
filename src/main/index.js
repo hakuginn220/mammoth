@@ -32,8 +32,16 @@ ipcMain.on('dispatch', (e, value) => {
       event.homeInit(e, value)
       break
 
-    case action.AUTHORIZATION_INIT:
-      event.authorizationInit(e, value)
+    case action.REGISTER_INIT:
+      event.registerInit(e, value)
+      break
+
+    case action.REGISTER_SUBMIT:
+      event.registerSubmit(e, value)
+      break
+
+    case action.REGISTER_CODE_INIT:
+      event.registerCodeInit(e, value)
       break
 
     default:

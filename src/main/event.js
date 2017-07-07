@@ -1,13 +1,38 @@
 export default class MainEvent {
   constructor (store) {
+    this._name = 'callback'
     this.store = store
   }
 
   homeInit (e, value) {
-    e.sender.send(value.type, this.store.accounts)
+    const { type } = value
+
+    e.sender.send(this._name, { type, payload: this.store.accounts })
   }
 
-  authorizationInit (e, value) {
-    e.sender.send(value.type, this.store.apps)
+  registerInit (e, value) {
+    const { type } = value
+
+    e.sender.send(this._name, { type, payload: this.store.apps })
+  }
+
+  registerSubmit (e, value) {
+    const { type, payload } = value
+
+    let apps = null
+
+    this.store.apps.forEach((element) => {
+      if (element.hostname === payload.hostname) {
+        apps = element
+      }
+    })
+
+    e.sender.send(this._name, { type, payload: apps })
+  }
+
+  registerCodeInit (e, value) {
+    const { type, payload } = value
+
+    e.sender.send(this._name, { type, payload })
   }
 }

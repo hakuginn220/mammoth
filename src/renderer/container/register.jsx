@@ -8,7 +8,7 @@ import * as ipc from '../../common/ipc'
 import dispatch from '../dispatcher'
 import * as action from '../../action'
 
-export default class Authorization extends Component {
+export default class Register extends Component {
   constructor (props) {
     super(props)
 
@@ -26,11 +26,11 @@ export default class Authorization extends Component {
   }
 
   componentDidMount () {
-    dispatch(action.AUTHORIZATION_INIT, {})
+    dispatch(action.REGISTER_INIT, {})
   }
 
-  bundleSubmit (event) {
-    event.preventDefault()
+  bundleSubmit (e) {
+    e.preventDefault()
 
     this.setState({
       message: '',
@@ -38,6 +38,9 @@ export default class Authorization extends Component {
     })
 
     const { hostname } = this.state
+
+    dispatch(action.REGISTER_SUBMIT, { hostname })
+
     const { fetch, FormData } = window
 
     const body = new FormData()
