@@ -5,6 +5,9 @@ import { ipcRenderer } from 'electron'
 import Loading from '../component/loading'
 import * as ipc from '../../common/ipc'
 
+import dispatch from '../dispatcher'
+import * as action from '../../action'
+
 export default class Home extends Component {
   constructor (props) {
     super(props)
@@ -30,7 +33,7 @@ export default class Home extends Component {
 
   componentDidMount () {
     this.setState({ wait: true })
-
+    dispatch(action.HOME_INIT, {})
     ipcRenderer.send(ipc.HOME)
   }
 

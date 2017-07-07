@@ -32,6 +32,10 @@ app.on('activate', () => {
   utils.createWindow(browser)
 })
 
+ipcMain.on('dispatch', (event, value) => {
+  console.log(value)
+})
+
 ipcMain.on(ipc.AUTHORIZATION, (event, value) => {
   console.log(ipc.AUTHORIZATION, value)
 
