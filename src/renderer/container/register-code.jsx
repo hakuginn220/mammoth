@@ -2,17 +2,15 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { ipcRenderer } from 'electron'
 
-import Loading from '../component/loading'
-import * as ipc from '../../common/ipc'
+import dispatch from '../dispatcher'
+import * as action from '../../action'
 
 export default class RegisterCode extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      code: '',
-      message: '',
-      wait: false
+      pincode: ''
     }
   }
 
@@ -20,50 +18,34 @@ export default class RegisterCode extends Component {
     console.log('register-code', this.state)
   }
 
-  componentWillMount () {
-    ipcRenderer.on(ipc.AUTHORIZATION_CODE, (event, error) => {
-      if (error) {
-        const { error_description } = JSON.parse(error.data)
-        this.setState({
-          message: error_description,
-          wait: false
-        })
-      } else {
+  componentDidMount () {
+    ipcRenderer.on('dispatch', (e, value) => {
+      if (value.type === action.END_OAUTH) {
         this.props.history.push('/')
       }
     })
   }
 
-  bundleSubmit (event) {
+  _submit (event) {
     event.preventDefault()
-
-    this.setState({
-      message: '',
-      wait: true
-    })
-
-    const { code } = this.state
-
-    ipcRenderer.send(ipc.AUTHORIZATION_CODE, { code })
+    const { pincode } = this.state
+    dispatch(action.END_OAUTH, { pincode })
   }
 
   render () {
-    if (this.state.wait) return <Loading />
-
     return (
-      <form onSubmit={(e) => this.bundleSubmit(e)}>
+      <form onSubmit={(e) => this._submit(e)}>
         <h1>Register</h1>
         <h2>Pin Code</h2>
         <div>
           <input
             type='password'
-            name='code'
-            value={this.state.code}
-            onChange={e => this.setState({ code: e.target.value })}
+            name='pincode'
+            value={this.state.pincode}
+            onChange={e => this.setState({ pincode: e.target.value })}
           />
           <button type='submit'>Register</button>
         </div>
-        <p>{this.state.message}</p>
         <p><Link to='/'>Back Home</Link></p>
       </form>
     )

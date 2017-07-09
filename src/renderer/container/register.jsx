@@ -2,20 +2,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { ipcRenderer } from 'electron'
 
-import Loading from '../component/loading'
-import * as ipc from '../../common/ipc'
-
 import dispatch from '../dispatcher'
 import * as action from '../../action'
+import * as mastodon from '../mastodon/register'
 
 export default class Register extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      hostname: '',
-      message: '',
-      wait: false
+      hostname: ''
     }
   }
 
@@ -23,51 +19,25 @@ export default class Register extends Component {
     console.log('register', this.state)
   }
 
-  componentWillMount () {
-    ipcRenderer.on(ipc.AUTHORIZATION, (event) => {
-      this.props.history.push('/register-code')
+  componentDidMount () {
+    ipcRenderer.on('dispatch', (e, value) => {
+      if (value.type === action.START_OAUTH) {
+        this.props.history.push('/register-code')
+      }
     })
   }
 
-  bundleSubmit (e) {
+  _submit (e) {
     e.preventDefault()
-
-    this.setState({
-      message: '',
-      wait: true
-    })
-
     const { hostname } = this.state
-    const { fetch, FormData } = window
-
-    const body = new FormData()
-    body.append('client_name', document.title)
-    body.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob')
-    body.append('scopes', 'read write follow')
-
-    fetch(`https://${hostname}/api/v1/apps`, {
-      method: 'POST',
-      body: body,
-      mode: 'cors'
-    })
-    .then(response => response.json())
-    .then(apps => {
-      dispatch(action.ADD_APPS, { hostname, apps })
-      ipcRenderer.send(ipc.AUTHORIZATION, { hostname, apps })
-    })
-    .catch(error => {
-      this.setState({
-        message: error.message,
-        wait: false
-      })
-    })
+    mastodon.postApps({ hostname })
+    .then(apps => { dispatch(action.START_OAUTH, { hostname, apps }) })
+    .catch(error => { console.log(error) })
   }
 
   render () {
-    if (this.state.wait) return <Loading />
-
     return (
-      <form onSubmit={(e) => this.bundleSubmit(e)}>
+      <form onSubmit={(e) => this._submit(e)}>
         <h1>Register</h1>
         <h2>Instance Select</h2>
         <div>
@@ -80,7 +50,6 @@ export default class Register extends Component {
           />
           <button type='submit'>Login</button>
         </div>
-        <p>{this.state.message}</p>
         <p><Link to='/'>Back Home</Link></p>
       </form>
     )
