@@ -22,6 +22,7 @@ ipcMain.on('dispatch', (e, value) => {
       break
 
     default:
+      e.sender.send('dispatch', { type: null, payload: store.sync() })
       break
   }
 })

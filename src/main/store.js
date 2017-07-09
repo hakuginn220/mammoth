@@ -4,21 +4,20 @@ import { app } from 'electron'
 
 export default class MainStore {
   constructor () {
-    this._path = app.getPath('userData')
-    this._pathAccounts = path.join(this._path, 'accounts.json')
-    this._pathApps = path.join(this._path, 'apps.json')
-
-    let _accounts = fs.readJsonSync(this._pathAccounts, { throws: false })
-    if (_accounts === null) _accounts = []
-    this.accounts = _accounts
+    this._pathApps = path.join(app.getPath('userData'), 'apps.json')
+    this._pathUsers = path.join(app.getPath('userData'), 'users.json')
 
     let _apps = fs.readJsonSync(this._pathApps, { throws: false })
     if (_apps === null) _apps = []
     this.apps = _apps
+
+    let _users = fs.readJsonSync(this._pathUsers, { throws: false })
+    if (_users === null) _users = []
+    this.users = _users
   }
 
   addAccounts (value) {
-    this.accounts.push(value)
+    this.users.push(value)
     this.save()
   }
 
@@ -28,23 +27,18 @@ export default class MainStore {
   }
 
   clear () {
-    this.accounts = []
+    this.users = []
     this.apps = []
-    fs.removeSync(this._pathAccounts)
-    fs.removeSync(this._pathApps)
     this.save()
   }
 
   save () {
-    fs.writeJsonSync(this._pathAccounts, this.accounts)
+    fs.writeJsonSync(this._pathUsers, this.users)
     fs.writeJsonSync(this._pathApps, this.apps)
   }
 
   sync () {
-    const { accounts, apps } = this
-    return {
-      accounts,
-      apps
-    }
+    const { apps, users } = this
+    return { apps, users }
   }
 }

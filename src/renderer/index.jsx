@@ -35,14 +35,17 @@ class App extends Component {
     super(props)
 
     this.state = {
-      accounts: [],
+      users: [],
       apps: []
     }
   }
 
+  componentDidUpdate () {
+    console.log('app', this.state)
+  }
+
   componentDidMount () {
     ipcRenderer.on('dispatch', (e, value) => {
-      console.log(value)
       this.setState(value.payload)
     })
 
@@ -53,15 +56,9 @@ class App extends Component {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path='/' render={
-            props => <Home {...props} {...this.state} />
-          } />
-          <Route exact path='/register' render={
-            props => <Register {...props} {...this.state} />
-          } />
-          <Route exact path='/register/code' render={
-            props => <RegisterCode {...props} {...this.state} />
-          } />
+          <Route exact path='/' render={() => <Home {...this.state} />} />
+          <Route exact path='/register' render={() => <Register {...this.state} />} />
+          <Route exact path='/register/code' render={() => <RegisterCode {...this.state} />} />
         </Switch>
       </HashRouter>
     )

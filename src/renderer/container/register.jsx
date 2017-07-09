@@ -25,6 +25,10 @@ export default class Register extends Component {
     })
   }
 
+  componentDidUpdate () {
+    console.log('register', this.state)
+  }
+
   bundleSubmit (e) {
     e.preventDefault()
 
@@ -60,27 +64,25 @@ export default class Register extends Component {
   }
 
   render () {
-    if (this.state.wait) {
-      return <Loading />
-    } else {
-      return (
-        <form onSubmit={(e) => this.bundleSubmit(e)}>
-          <h1>Authorization</h1>
-          <h2>Instance Select</h2>
-          <div>
-            <input
-              type='text'
-              name='hostname'
-              placeholder='mastodon.cloud'
-              value={this.state.hostname}
-              onChange={e => this.setState({ hostname: e.target.value })}
-            />
-            <button type='submit'>Login</button>
-          </div>
-          <p>{this.state.message}</p>
-          <p><Link to='/'>Back Home</Link></p>
-        </form>
-      )
-    }
+    if (this.state.wait) return <Loading />
+
+    return (
+      <form onSubmit={(e) => this.bundleSubmit(e)}>
+        <h1>Authorization</h1>
+        <h2>Instance Select</h2>
+        <div>
+          <input
+            type='text'
+            name='hostname'
+            placeholder='mastodon.cloud'
+            value={this.state.hostname}
+            onChange={e => this.setState({ hostname: e.target.value })}
+          />
+          <button type='submit'>Login</button>
+        </div>
+        <p>{this.state.message}</p>
+        <p><Link to='/'>Back Home</Link></p>
+      </form>
+    )
   }
 }

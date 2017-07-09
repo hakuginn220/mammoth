@@ -30,6 +30,10 @@ export default class RegisterCode extends Component {
     })
   }
 
+  componentDidUpdate () {
+    console.log('register-code', this.state)
+  }
+
   bundleSubmit (event) {
     event.preventDefault()
 
@@ -44,26 +48,24 @@ export default class RegisterCode extends Component {
   }
 
   render () {
-    if (this.state.wait) {
-      return <Loading />
-    } else {
-      return (
-        <form onSubmit={(e) => this.bundleSubmit(e)}>
-          <h1>Authorization</h1>
-          <h2>Pin Code</h2>
-          <div>
-            <input
-              type='password'
-              name='code'
-              value={this.state.code}
-              onChange={e => this.setState({ code: e.target.value })}
-            />
-            <button type='submit'>Register</button>
-          </div>
-          <p>{this.state.message}</p>
-          <p><Link to='/authorization'>Back Instance</Link></p>
-        </form>
-      )
-    }
+    if (this.state.wait) return <Loading />
+
+    return (
+      <form onSubmit={(e) => this.bundleSubmit(e)}>
+        <h1>Authorization</h1>
+        <h2>Pin Code</h2>
+        <div>
+          <input
+            type='password'
+            name='code'
+            value={this.state.code}
+            onChange={e => this.setState({ code: e.target.value })}
+          />
+          <button type='submit'>Register</button>
+        </div>
+        <p>{this.state.message}</p>
+        <p><Link to='/authorization'>Back Instance</Link></p>
+      </form>
+    )
   }
 }
