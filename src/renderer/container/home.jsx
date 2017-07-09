@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import * as mastodon from '../mastodon/home'
 import Account from '../component/account'
+import * as mastodon from '../mastodon/home'
 
 export default class Home extends Component {
   constructor (props) {
@@ -17,7 +17,7 @@ export default class Home extends Component {
     console.log('home', this.state)
   }
 
-  componentWillMount () {
+  componentDidMount () {
     this._getMyAccounts(this.props.users)
   }
 
@@ -26,15 +26,9 @@ export default class Home extends Component {
   }
 
   _getMyAccounts (users) {
-    Promise.all(users.map(user => {
-      return mastodon.getMyAccount(user)
-    }))
-    .then(accounts => {
-      this.setState({ accounts: accounts })
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    Promise.all(users.map(user => mastodon.getMyAccount(user)))
+    .then(accounts => { this.setState({ accounts: accounts }) })
+    .catch(error => { console.log(error) })
   }
 
   render () {
@@ -42,11 +36,14 @@ export default class Home extends Component {
       <div>
         <h1>Home</h1>
         <ul>
-          {this.state.accounts.map((account, index) => (
-            <li key={index}><Account {...account} /></li>
+          {this.state.accounts.map((account, id) => (
+            <li key={id}>
+              <Link to={`/timeline/${id}`}>Timeline/{id}</Link>
+              <Account {...account} />
+            </li>
           ))}
+          <li key='register'><Link to='/register'>Add Account</Link></li>
         </ul>
-        <p><Link to='/register'>Authorization</Link></p>
       </div>
     )
   }

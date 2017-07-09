@@ -10,6 +10,7 @@ import * as action from '../action'
 import Home from './container/home'
 import Register from './container/register'
 import RegisterCode from './container/register-code'
+import Timeline from './container/timeline'
 
 injectGlobal`
   ::selection {
@@ -56,9 +57,10 @@ class App extends Component {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path='/' render={() => <Home {...this.state} />} />
-          <Route exact path='/register' render={() => <Register {...this.state} />} />
-          <Route exact path='/register/code' render={() => <RegisterCode {...this.state} />} />
+          <Route exact path='/' render={props => <Home {...props} {...this.state} />} />
+          <Route path='/register' render={props => <Register {...props} {...this.state} />} />
+          <Route path='/register-code' render={props => <RegisterCode {...props} {...this.state} />} />
+          <Route path='/timeline/:id' render={props => <Timeline {...props} {...this.state} />} />
         </Switch>
       </HashRouter>
     )

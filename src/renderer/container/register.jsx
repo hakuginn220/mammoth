@@ -19,14 +19,14 @@ export default class Register extends Component {
     }
   }
 
-  componentWillMount () {
-    ipcRenderer.on(ipc.AUTHORIZATION, (event) => {
-      this.props.history.push('/register/code')
-    })
-  }
-
   componentDidUpdate () {
     console.log('register', this.state)
+  }
+
+  componentWillMount () {
+    ipcRenderer.on(ipc.AUTHORIZATION, (event) => {
+      this.props.history.push('/register-code')
+    })
   }
 
   bundleSubmit (e) {
@@ -68,7 +68,7 @@ export default class Register extends Component {
 
     return (
       <form onSubmit={(e) => this.bundleSubmit(e)}>
-        <h1>Authorization</h1>
+        <h1>Register</h1>
         <h2>Instance Select</h2>
         <div>
           <input

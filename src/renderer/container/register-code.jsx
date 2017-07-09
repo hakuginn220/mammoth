@@ -16,6 +16,10 @@ export default class RegisterCode extends Component {
     }
   }
 
+  componentDidUpdate () {
+    console.log('register-code', this.state)
+  }
+
   componentWillMount () {
     ipcRenderer.on(ipc.AUTHORIZATION_CODE, (event, error) => {
       if (error) {
@@ -28,10 +32,6 @@ export default class RegisterCode extends Component {
         this.props.history.push('/')
       }
     })
-  }
-
-  componentDidUpdate () {
-    console.log('register-code', this.state)
   }
 
   bundleSubmit (event) {
@@ -52,7 +52,7 @@ export default class RegisterCode extends Component {
 
     return (
       <form onSubmit={(e) => this.bundleSubmit(e)}>
-        <h1>Authorization</h1>
+        <h1>Register</h1>
         <h2>Pin Code</h2>
         <div>
           <input
@@ -64,7 +64,7 @@ export default class RegisterCode extends Component {
           <button type='submit'>Register</button>
         </div>
         <p>{this.state.message}</p>
-        <p><Link to='/authorization'>Back Instance</Link></p>
+        <p><Link to='/'>Back Home</Link></p>
       </form>
     )
   }
