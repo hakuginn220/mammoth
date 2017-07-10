@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import Status from '../component/status'
 import * as mastodon from '../mastodon/timeline'
 
-export default class Timeline extends Component {
+export default observer(class Timeline extends Component {
   constructor (props) {
     super(props)
 
@@ -67,4 +68,4 @@ export default class Timeline extends Component {
       </div>
     )
   }
-}
+})

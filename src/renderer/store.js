@@ -1,12 +1,12 @@
-import { observable, extendObservable } from 'mobx'
+import { extendObservable } from 'mobx'
 
 export default class RenderStore {
-  constructor (main) {
+  constructor (mainStore) {
     extendObservable(this, {
-      users: observable.shallow(main.users),
-      apps: observable.shallow(main.apps),
-      home: observable.shallow([]),
-      public: observable.shallow([])
+      users: mainStore.users,
+      apps: mainStore.apps,
+      home: [],
+      public: []
     })
   }
 }

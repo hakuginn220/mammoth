@@ -6,6 +6,10 @@ import * as action from '../action'
 
 const store = new Store()
 
+ipcMain.on('ready', (e) => {
+  e.sender.send('ready', { type: null, payload: store.sync() })
+})
+
 ipcMain.on('dispatch', (e, value) => {
   console.log(value)
 

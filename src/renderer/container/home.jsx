@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import Account from '../component/account'
 import * as mastodon from '../mastodon/home'
 
-export default class Home extends Component {
+export default observer(class Home extends Component {
   constructor (props) {
     super(props)
 
@@ -47,4 +48,4 @@ export default class Home extends Component {
       </div>
     )
   }
-}
+})

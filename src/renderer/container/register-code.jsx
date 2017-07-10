@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import { ipcRenderer } from 'electron'
 
 import dispatch from '../dispatcher'
 import * as action from '../../action'
 
-export default class RegisterCode extends Component {
+export default observer(class RegisterCode extends Component {
   constructor (props) {
     super(props)
 
@@ -50,4 +51,4 @@ export default class RegisterCode extends Component {
       </form>
     )
   }
-}
+})
