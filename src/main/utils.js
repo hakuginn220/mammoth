@@ -1,6 +1,6 @@
 import path from 'path'
 import url from 'url'
-import { BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron'
 
 let browser = null
 
@@ -8,6 +8,7 @@ export function createWindow () {
   if (browser !== null) return
 
   browser = new BrowserWindow({
+    title: app.getName(),
     width: 800,
     height: 600,
     minWidth: 320,
@@ -18,7 +19,7 @@ export function createWindow () {
   })
 
   browser.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, '../index.html'),
     protocol: 'file:',
     slashes: true
   }))

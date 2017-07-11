@@ -2,8 +2,8 @@ const path = require('path')
 
 const option = {
   output: {
-    filename: '[name].min.js',
-    path: path.resolve(__dirname, 'app')
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
