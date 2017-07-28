@@ -20,7 +20,7 @@
     "electron": "^1.6.11",
     "electron-packager": "^8.7.2",
     "fs-extra": "^4.0.0",
-    "mobx": "^3.2.1",
+    "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
     "oauth": "^0.9.15",
     "preact": "^8.2.1",
@@ -30,6 +30,6 @@
     "react-router-dom": "^4.1.2",
     "standard": "^10.0.2",
     "styled-components": "^2.1.1",
-    "webpack": "^3.4.0"
+    "webpack": "^3.4.1"
   }
 }
