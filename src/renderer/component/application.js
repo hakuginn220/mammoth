@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Application (props) {
+export default function Application(props) {
   return (
     <ul>
       <li>name: {props.name}</li>

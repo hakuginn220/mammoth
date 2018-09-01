@@ -1,6 +1,6 @@
 const { fetch, Headers } = window
 
-export function getMyAccount (user) {
+export function getMyAccount(user) {
   const { hostname, accessToken } = user
 
   const headers = new Headers()

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Account (props) {
+export default function Account(props) {
   return (
     <ul>
       <li>id: {props.id}</li>

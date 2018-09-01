@@ -2,9 +2,11 @@ import path from 'path'
 import url from 'url'
 import { app, BrowserWindow } from 'electron'
 
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
 let browser = null
 
-export function createWindow () {
+export function createWindow() {
   if (browser !== null) return
 
   browser = new BrowserWindow({
@@ -13,16 +15,23 @@ export function createWindow () {
     height: 600,
     minWidth: 320,
     minHeight: 480,
-    icon: path.join(__dirname, 'images/icon.ico'),
+    icon: path.join(__static, 'icon.ico'),
     backgroundColor: '#ffffff',
     darkTheme: true
   })
 
-  browser.loadURL(url.format({
-    pathname: path.join(__dirname, '../index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  if (isDevelopment) {
+    browser.webContents.openDevTools()
+    browser.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+  } else {
+    browser.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file',
+        slashes: true
+      })
+    )
+  }
 
   browser.on('closed', () => {
     browser = null

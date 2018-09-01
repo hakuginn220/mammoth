@@ -3,11 +3,8 @@
 Thumbs.db
 
 # node
-npm-debug.log*
+.log
 node_modules
 
 # webpack
 dist
-
-# electron-packager
-build

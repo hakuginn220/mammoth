@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Mention (props) {
+export default function Mention(props) {
   return (
     <ul>
       <li>url: {props.url}</li>

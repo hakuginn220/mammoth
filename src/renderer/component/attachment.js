@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Attachment (props) {
+export default function Attachment(props) {
   return (
     <ul>
       <li>id: {props.id}</li>

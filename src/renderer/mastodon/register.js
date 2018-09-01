@@ -1,6 +1,6 @@
 const { fetch, FormData } = window
 
-export function postApps (user) {
+export function postApps(user) {
   const { hostname } = user
 
   const body = new FormData()
@@ -12,6 +12,5 @@ export function postApps (user) {
     method: 'POST',
     body: body,
     mode: 'cors'
-  })
-  .then(response => response.json())
+  }).then(response => response.json())
 }

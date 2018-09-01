@@ -2,8 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { ipcRenderer, remote } from 'electron'
 
-import Store from './store'
-import App from './app'
+import Store from '@/store'
+import App from '@/app'
 
 const { app } = remote
 
@@ -19,10 +19,7 @@ ipcRenderer.on('ready', (e, value) => {
     apps: apps
   })
 
-  render(
-    <App store={store} />,
-    document.getElementById('root')
-  )
+  render(<App store={store} />, document.getElementById('app'))
 })
 
 ipcRenderer.on('dispatch', (e, value) => {

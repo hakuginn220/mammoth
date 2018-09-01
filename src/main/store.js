@@ -4,7 +4,7 @@ import { app, shell } from 'electron'
 import { OAuth2 } from 'oauth'
 
 export default class MainStore {
-  constructor () {
+  constructor() {
     this._tempOauth = null
     this._tempHostname = null
     this._pathApps = path.join(app.getPath('userData'), 'apps.json')
@@ -19,7 +19,7 @@ export default class MainStore {
     this.users = _users
   }
 
-  startOauth (payload) {
+  startOauth(payload) {
     const { hostname, apps } = payload
 
     this._tempOauth = new OAuth2(
@@ -42,7 +42,7 @@ export default class MainStore {
     this.save()
   }
 
-  endOauth (payload) {
+  endOauth(payload) {
     const { pincode } = payload
 
     const option = {
@@ -50,33 +50,37 @@ export default class MainStore {
       redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
     }
 
-    this._tempOauth.getOAuthAccessToken(pincode, option, (error, accessToken) => {
-      if (error) return
+    this._tempOauth.getOAuthAccessToken(
+      pincode,
+      option,
+      (error, accessToken) => {
+        if (error) return
 
-      const user = {
-        hostname: this._tempHostname,
-        accessToken: accessToken
+        const user = {
+          hostname: this._tempHostname,
+          accessToken: accessToken
+        }
+
+        this._tempOauth = null
+        this._tempHostname = null
+        this.users.push(user)
+        this.save()
       }
-
-      this._tempOauth = null
-      this._tempHostname = null
-      this.users.push(user)
-      this.save()
-    })
+    )
   }
 
-  clear () {
+  clear() {
     this.users = []
     this.apps = []
     this.save()
   }
 
-  save () {
+  save() {
     fs.writeJsonSync(this._pathUsers, this.users)
     fs.writeJsonSync(this._pathApps, this.apps)
   }
 
-  sync () {
+  sync() {
     const { apps, users } = this
     return { apps, users }
   }

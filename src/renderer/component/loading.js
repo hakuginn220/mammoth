@@ -26,6 +26,4 @@ const Loading = styled.div`
   animation: ${Anime} 1.1s infinite linear;
 `
 
-export default () => (
-  <Loading>Loading...</Loading>
-)
+export default () => <Loading>Loading...</Loading>

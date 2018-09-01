@@ -1,6 +1,6 @@
 const { fetch, Headers } = window
 
-export function getHomeTimeline (user) {
+export function getHomeTimeline(user) {
   const { hostname, accessToken } = user
 
   const headers = new Headers()
@@ -12,7 +12,7 @@ export function getHomeTimeline (user) {
   }).then(response => response.json())
 }
 
-export function getPublicTimeline (user) {
+export function getPublicTimeline(user) {
   const { hostname } = user
 
   return fetch(`https://${hostname}/api/v1/timelines/public`, {

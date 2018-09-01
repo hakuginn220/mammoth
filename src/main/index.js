@@ -1,12 +1,12 @@
 import { app, ipcMain } from 'electron'
 
-import Store from './store'
-import * as utils from './utils'
-import * as action from '../action'
+import Store from '@/store'
+import * as utils from '@/utils'
+import * as action from 'common/action'
 
 const store = new Store()
 
-ipcMain.on('ready', (e) => {
+ipcMain.on('ready', e => {
   e.sender.send('ready', { type: null, payload: store.sync() })
 })
 

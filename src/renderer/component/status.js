@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Status (props) {
+export default function Status(props) {
   return (
     <ul>
       <li>id: {props.id}</li>
