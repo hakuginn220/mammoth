@@ -6,7 +6,7 @@
   "scripts": {
     "start": "",
     "test": "",
-    "fmt": "prettier --write src/**/**/*.js",
+    "fmt": "prettier --write 'src/**/*.js'",
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "precommit": "lint-staged"
