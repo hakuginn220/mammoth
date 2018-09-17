@@ -2,8 +2,6 @@ import path from 'path'
 import url from 'url'
 import { app, BrowserWindow } from 'electron'
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
 let browser = null
 
 export function createWindow() {
@@ -20,7 +18,7 @@ export function createWindow() {
     darkTheme: true
   })
 
-  if (isDevelopment) {
+  if (process.env.NODE_ENV !== 'production') {
     browser.webContents.openDevTools()
     browser.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
   } else {
